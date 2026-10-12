@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kipler Mathematics and Statistics</title>
+<style>
+:root{--bg:#f5f8ff;--card:#fff;--text:#172033;--muted:#667085;--primary:#2864e6;--primary2:#4537d5;--line:#e3e9f5;--soft:#edf4ff}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+header{background:linear-gradient(135deg,var(--primary),var(--primary2));color:white;padding:22px 18px 28px;position:sticky;top:0;z-index:10;box-shadow:0 5px 20px #1c43a533}
+.top{max-width:1050px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{display:flex;gap:12px;align-items:center}.logo{width:48px;height:48px;border-radius:14px;background:white;color:var(--primary);display:grid;place-items:center;font-size:25px;font-weight:900}.brand h1{font-size:22px;margin:0}.brand p{margin:3px 0 0;opacity:.82;font-size:12px}
+button{border:0;cursor:pointer}.theme{background:#ffffff22;color:#fff;border:1px solid #ffffff33;border-radius:12px;padding:10px 13px;font-weight:700}
+.search{max-width:1050px;margin:18px auto 0;position:relative}.search input{width:100%;padding:15px 18px 15px 45px;border:0;border-radius:15px;font-size:15px;outline:0;box-shadow:0 5px 18px #122b631c}.search span{position:absolute;left:16px;top:12px;font-size:22px}
+main{max-width:1050px;margin:25px auto;padding:0 16px}.tabs{display:flex;gap:9px;overflow:auto;padding-bottom:5px}.tabs button{white-space:nowrap;padding:10px 14px;border-radius:20px;background:white;border:1px solid var(--line);color:var(--text);font-weight:700}.tabs button.active{background:var(--primary);color:white;border-color:var(--primary)}
+.hero{background:linear-gradient(135deg,#eaf2ff,#fff);border:1px solid var(--line);border-radius:20px;padding:20px;margin:18px 0}.hero h2{margin:0 0 6px}.hero p{margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 4px 15px #1b315c0a}.card h3{margin:0 0 13px;font-size:18px}.formula{background:var(--soft);border-radius:13px;padding:14px;margin:9px 0;font-family:Cambria,serif;font-size:19px;line-height:1.6;overflow:auto}.meaning{font-size:12px;color:var(--muted);margin-top:4px}.star{float:right;background:none;font-size:20px;color:#9aa4b2}.star.on{color:#f4ad1f}.section-title{margin:27px 0 13px}.empty{padding:35px;text-align:center;color:var(--muted);background:white;border:1px solid var(--line);border-radius:16px}
+footer{text-align:center;color:var(--muted);padding:35px 15px}.badge{display:inline-block;background:#e9f0ff;color:#2457c8;padding:5px 9px;border-radius:9px;font-size:11px;font-weight:800;margin-bottom:9px}
+body.dark{--bg:#0e1420;--card:#151e2e;--text:#edf2ff;--muted:#9ba8bd;--line:#26344a;--soft:#1b2b45}.dark .hero{background:linear-gradient(135deg,#172944,#151e2e)}.dark .tabs button{background:#151e2e;color:var(--text)}
+@media(max-width:600px){.brand h1{font-size:18px}.brand p{font-size:10px}.grid{grid-template-columns:1fr}.hero{padding:16px}.formula{font-size:17px}}
+.solver{margin:20px 0;background:linear-gradient(145deg,#fff,#f3f7ff)}
+.solver-grid{display:grid;grid-template-columns:1fr 2fr;gap:13px;margin-top:15px}
+.solver label{display:block;font-size:13px}.solver select,.solver input{width:100%;margin-top:7px;padding:12px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--text);font-size:14px;outline:none}
+.input-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.solve-btn{margin-top:15px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;padding:13px 18px;border-radius:12px;font-weight:800;font-size:14px}
+.solution{margin-top:16px}.solution-box{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:16px}.step{padding:10px 0;border-bottom:1px dashed var(--line);line-height:1.65}.step:last-child{border-bottom:0}.answer{font-size:21px;font-weight:900;margin-top:12px}
+@media(max-width:700px){.solver-grid{grid-template-columns:1fr}.input-row{grid-template-columns:1fr}}
+.lens-box{margin-top:15px;padding:16px;border:1px dashed var(--line);border-radius:15px;background:var(--soft)}
+.upload-btn{display:inline-block;padding:13px 16px;border-radius:11px;background:var(--primary);color:white;font-weight:800;cursor:pointer}
+.lens-preview{margin-top:14px;min-height:190px;border-radius:13px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;overflow:hidden;color:var(--muted)}
+.lens-preview img{display:block;max-width:100%;max-height:360px;object-fit:contain}.lens-preview div{font-size:42px}.lens-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:13px}
+.quiz-q{padding:16px 0;border-bottom:1px solid var(--line)}
+.quiz-q h3{margin:0 0 12px;font-size:16px}.quiz-opt{display:block;width:100%;text-align:left;padding:11px 13px;margin:7px 0;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text)}
+.quiz-opt:hover{border-color:var(--primary)}.quiz-opt.correct{border-color:#159957;background:#eafaf1}.quiz-opt.wrong{border-color:#d92d20;background:#fff0ef}
+.quiz-result{margin-top:16px;padding:16px;border-radius:14px;background:var(--soft);font-weight:700}
+.quiz-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.quiz-btn{padding:12px 16px;border-radius:11px;background:var(--primary);color:#fff;font-weight:800}
+.quiz-btn.secondary{background:var(--card);color:var(--text);border:1px solid var(--line)}
+
+<style>input.input-error{border:2px solid #dc2626!important;background:#fff1f2;}
+</style>
+</style>
+
+<style id="professional-upgrade">
+:root{
+  --pro-bg:#f5f7fb; --pro-surface:#ffffff; --pro-text:#172033;
+  --pro-muted:#667085; --pro-border:#e4e7ec; --pro-primary:#4f46e5;
+  --pro-primary2:#7c3aed; --pro-shadow:0 10px 30px rgba(16,24,40,.08);
+}
+body{background:var(--pro-bg)!important;color:var(--pro-text)!important;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important}
+header,.header,.topbar{border-bottom:1px solid var(--pro-border)!important;box-shadow:0 2px 12px rgba(16,24,40,.04)}
+.card,.panel,.formula-card,.solver,.quiz,.section,.tool-card,.category-card{
+  background:var(--pro-surface)!important;border:1px solid var(--pro-border)!important;
+  border-radius:18px!important;box-shadow:var(--pro-shadow)!important;
+}
+button,.btn{border-radius:12px!important;font-weight:700!important;transition:transform .15s ease,box-shadow .15s ease,opacity .15s ease!important}
+button:hover,.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(79,70,229,.16)}
+input,select,textarea{border:1px solid var(--pro-border)!important;border-radius:12px!important;background:#fff!important}
+h1,h2,h3{letter-spacing:-.02em}
+#professionalToolbar{
+  display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0;
+  padding:12px 14px;background:#fff;border:1px solid var(--pro-border);
+  border-radius:16px;box-shadow:0 6px 20px rgba(16,24,40,.05)
+}
+#professionalToolbar .pro-badge{padding:7px 10px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:800}
+#professionalToolbar .pro-action{margin-left:auto}
+@media(max-width:640px){#professionalToolbar .pro-action{margin-left:0;width:100%}}
+#proProgress{height:7px;background:#eef0f4;border-radius:99px;overflow:hidden;margin-top:8px}
+#proProgress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pro-primary),var(--pro-primary2));transition:width .25s ease}
+body.dark,body.dark-mode,[data-theme="dark"]{--pro-bg:#0b1020;--pro-surface:#111827;--pro-text:#f3f4f6;--pro-muted:#aab2c0;--pro-border:#263247}
+</style>
+
+
+<style id="modern-features-css">
+:root{--mf-accent:#4f46e5;--mf-accent2:#7c3aed}
+#modernFeatures{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:20px 0}
+.mf-card{background:var(--pro-surface,#fff);border:1px solid var(--pro-border,#e4e7ec);border-radius:18px;padding:16px;box-shadow:0 8px 24px rgba(16,24,40,.06)}
+.mf-card h3{margin:0 0 7px;font-size:17px}.mf-card p{margin:0 0 12px;color:var(--pro-muted,#667085);font-size:13px}
+.mf-row{display:flex;gap:8px;flex-wrap:wrap}.mf-btn{border:0;padding:9px 12px;border-radius:11px;background:#eef2ff;color:#3730a3;cursor:pointer;font-weight:700}
+.mf-btn.primary{background:linear-gradient(135deg,var(--mf-accent),var(--mf-accent2));color:#fff}
+#mfCalc{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.mf-key{padding:12px 4px;border:1px solid var(--pro-border,#e4e7ec);border-radius:10px;background:var(--pro-surface,#fff);font-weight:700}
+#mfDisplay{grid-column:1/-1;padding:13px;border-radius:11px;border:1px solid var(--pro-border,#e4e7ec);font-size:20px;text-align:right;min-height:25px}
+#mfToast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);opacity:0;background:#111827;color:#fff;padding:10px 15px;border-radius:999px;z-index:9999;transition:.25s;pointer-events:none}
+#mfToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#mfHistory{max-height:180px;overflow:auto;font-size:13px}
+.mf-history-item{padding:8px 0;border-bottom:1px solid var(--pro-border,#e4e7ec)}
+@media(max-width:520px){#modernFeatures{grid-template-columns:1fr}.mf-card{padding:14px}}
+</style>
+
+
+<style id="kipler-brand-css">
+.kipler-brand{
+  display:flex;align-items:center;gap:12px;margin:4px 0 18px;
+  padding:16px 18px;border-radius:20px;
+  background:linear-gradient(135deg,#eef2ff,#f5f3ff);
+  border:1px solid #dfe3f0;
+}
+.kipler-logo{
+  width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;
+  font-size:22px;font-weight:900;box-shadow:0 8px 18px rgba(79,70,229,.22);
+}
+.kipler-brand-title{font-size:21px;font-weight:900;letter-spacing:-.03em}
+.kipler-brand-sub{font-size:12px;color:#667085;margin-top:2px}
+</style>
+
+
+<style id="kipler-v2-css">
+.kipler-v2{margin:20px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.kv-card{background:var(--pro-surface,#fff);border:1px solid var(--pro-border,#e4e7ec);border-radius:18px;padding:17px;box-shadow:0 8px 24px rgba(16,24,40,.06)}
+.kv-card h3{margin:0 0 6px}.kv-card p{font-size:13px;color:var(--pro-muted,#667085);margin:0 0 12px;line-height:1.45}
+.kv-btn{border:0;border-radius:11px;padding:9px 12px;font-weight:750;cursor:pointer;background:#eef2ff;color:#3730a3;margin:3px}
+.kv-btn.primary{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
+.kv-input{width:100%;box-sizing:border-box;padding:10px;border:1px solid var(--pro-border,#e4e7ec);border-radius:11px;margin:5px 0}
+.kv-result{padding:10px;margin-top:8px;border-radius:11px;background:#f8fafc;font-size:13px;line-height:1.5}
+.kv-stat{font-size:26px;font-weight:900}.kv-muted{font-size:12px;color:#667085}
+.kv-badges{display:flex;gap:7px;flex-wrap:wrap}.kv-badge{padding:6px 9px;border-radius:999px;background:#f2f4f7;font-size:12px;font-weight:700}
+</style>
+
+<link rel="manifest" href="kipler-manifest.json">
+<meta name="theme-color" content="#2864e6">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Kipler">
+</head>
+<body>
+
+
+<div class="kipler-brand" role="banner">
+  <div class="kipler-logo">K</div>
+  <div>
+    <div class="kipler-brand-title">Kipler Mathematics and Statistics</div>
+    <div class="kipler-brand-sub">Learn • Practice • Solve • Master</div>
+  </div>
+</div>
+
+<div id="professionalToolbar" aria-label="App status">
+  <span class="pro-badge">PRO • Kipler Mathematics and Statistics</span>
+  <span id="proStatus">Ready to learn</span>
+  <div class="pro-action">
+    <button class="btn" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">⌃ Back to top</button>
+  </div>
+
+
+<section class="kipler-v2" id="kiplerAdvancedTools">
+  <div class="kv-card">
+    <h3>🤖 AI Maths Tutor</h3>
+    <p>Type a simple question and get a guided explanation. This offline tutor covers common arithmetic and algebra examples.</p>
+    <input class="kv-input" id="aiQ" placeholder="Example: solve x² - 5x + 6 = 0">
+    <button class="kv-btn primary" onclick="kvTutor()">Explain</button>
+    <div class="kv-result" id="aiA">Your guided explanation will appear here.</div>
+  </div>
+
+  <div class="kv-card">
+    <h3>📊 Statistics Toolkit</h3>
+    <p>Quickly calculate mean, median, mode and range from a list of numbers.</p>
+    <input class="kv-input" id="statsInput" placeholder="Example: 10, 12, 12, 15, 18">
+    <button class="kv-btn primary" onclick="kvStats()">Calculate</button>
+    <div class="kv-result" id="statsA">Enter numbers separated by commas.</div>
+  </div>
+
+  <div class="kv-card">
+    <h3>🎯 Daily Challenge</h3>
+    <p>Practice one question at a time and build your learning streak.</p>
+    <div id="challengeQ" class="kv-result"></div>
+    <button class="kv-btn primary" onclick="kvNewChallenge()">New Question</button>
+    <button class="kv-btn" onclick="kvAnswer()">Show Answer</button>
+    <div id="challengeA" class="kv-result"></div>
+  </div>
+
+  <div class="kv-card">
+    <h3>🏆 Progress & Achievements</h3>
+    <p>Your progress is stored on this device.</p>
+    <div class="kv-stat" id="kvSessions">0</div>
+    <div class="kv-muted">study sessions</div>
+    <div class="kv-badges" style="margin-top:10px">
+      <span class="kv-badge" id="badge1">🌱 Starter</span>
+      <span class="kv-badge" id="badge2">🔥 5 Sessions</span>
+      <span class="kv-badge" id="badge3">🏆 10 Sessions</span>
+    </div>
+  </div>
+
+  <div class="kv-card">
+    <h3>📅 Study Planner</h3>
+    <p>Set a simple daily study goal.</p>
+    <input class="kv-input" id="studyGoal" type="number" min="5" value="30" placeholder="Minutes">
+    <button class="kv-btn primary" onclick="kvSaveGoal()">Save Goal</button>
+    <div class="kv-result" id="goalA"></div>
+  </div>
+
+  <div class="kv-card">
+    <h3>📥 Formula Quick Notes</h3>
+    <p>Save a personal formula or reminder for revision.</p>
+    <input class="kv-input" id="noteInput" placeholder="Example: AP: aₙ = a + (n−1)d">
+    <button class="kv-btn primary" onclick="kvSaveNote()">Save Note</button>
+    <div class="kv-result" id="noteA">No note saved yet.</div>
+  </div>
+</section>
+
+<section id="modernFeatures" aria-label="Modern learning tools">
+  <div class="mf-card">
+    <h3>⚡ Quick Calculator</h3>
+    <p>Fast calculations without leaving the app.</p>
+    <div id="mfCalc">
+      <div id="mfDisplay">0</div>
+      <button class="mf-key" onclick="mfKey('7')">7</button><button class="mf-key" onclick="mfKey('8')">8</button><button class="mf-key" onclick="mfKey('9')">9</button><button class="mf-key" onclick="mfKey('/')">÷</button>
+      <button class="mf-key" onclick="mfKey('4')">4</button><button class="mf-key" onclick="mfKey('5')">5</button><button class="mf-key" onclick="mfKey('6')">6</button><button class="mf-key" onclick="mfKey('*')">×</button>
+      <button class="mf-key" onclick="mfKey('1')">1</button><button class="mf-key" onclick="mfKey('2')">2</button><button class="mf-key" onclick="mfKey('3')">3</button><button class="mf-key" onclick="mfKey('-')">−</button>
+      <button class="mf-key" onclick="mfKey('0')">0</button><button class="mf-key" onclick="mfKey('.')">.</button><button class="mf-key" onclick="mfEqual()">=</button><button class="mf-key" onclick="mfKey('+')">+</button>
+    </div>
+    <div class="mf-row" style="margin-top:8px"><button class="mf-btn" onclick="mfClear()">Clear</button><button class="mf-btn" onclick="mfCopy()">Copy result</button></div>
+  </div>
+
+  <div class="mf-card">
+    <h3>📚 Study Tools</h3>
+    <p>Save useful formulas and keep your study activity handy.</p>
+    <div class="mf-row">
+      <button class="mf-btn primary" onclick="mfAddStudy()">➕ Study session</button>
+      <button class="mf-btn" onclick="mfShare()">↗ Share app</button>
+      <button class="mf-btn" onclick="mfInstall()">📲 Install</button>
+    </div>
+    <div style="margin-top:12px"><b id="mfStreak">0</b> study sessions</div>
+  </div>
+
+  <div class="mf-card">
+    <h3>🕘 Recent Activity</h3>
+    <p>Your latest calculator results are stored locally on this device.</p>
+    <div id="mfHistory">No activity yet.</div>
+    <button class="mf-btn" onclick="mfClearHistory()" style="margin-top:8px">Clear history</button>
+  </div>
+
+  <div class="mf-card">
+    <h3>♿ Accessibility</h3>
+    <p>Make reading easier with larger text and stronger contrast.</p>
+    <div class="mf-row">
+      <button class="mf-btn" onclick="mfFont(1)">A+ Larger</button>
+      <button class="mf-btn" onclick="mfFont(-1)">A− Smaller</button>
+      <button class="mf-btn" onclick="mfContrast()">◐ Contrast</button>
+    </div>
+  </div>
+</section>
+<div id="mfToast"></div>
+  <div id="proProgress" style="flex-basis:100%" aria-label="Learning progress"><span></span></div>
+</div>
+
+<header>
+  <div class="top">
+    <div class="brand"><div class="logo">π</div><div><h1>Kipler Mathematics and Statistics</h1><p>ప్యూర్ మ్యాథ్స్ • Formulas • Quick Revision</p></div></div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+      <select id="languageSelect" class="theme" onchange="setLanguage(this.value)" aria-label="Language">
+        <option value="en">🇬🇧 English</option>
+        <option value="te">🇮🇳 తెలుగు</option>
+      </select>
+      <button class="theme" onclick="toggleTheme()">☾</button>
+    </div>
+  </div>
+  <div class="search"><span>⌕</span><input id="search" oninput="render()" placeholder="Search formulas... e.g. logarithm, sin, derivative"></div>
+</header>
+<main>
+  <div class="tabs" id="tabs"></div>
+  <div style="margin-top:12px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+    <button class="theme" style="background:#ffffff;color:var(--primary);font-weight:800"
+            onclick="startCamera()">📷 Camera</button>
+    <button class="theme" style="background:#ffffff22;color:#fff"
+            onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">📝 Quiz</button>
+  </div>
+  </div>
+  <section class="hero">
+    <h2>📚 All-in-One Pure Mathematics</h2>
+    <p>Quick formula reference for school, intermediate and degree-level revision.</p>
+  </section>
+
+  <section class="solver card" id="solver">
+    <span class="badge">🧠 STEP-BY-STEP PROBLEM SOLVER</span>
+    <h2 style="margin:4px 0 6px">Solve a Maths Problem</h2>
+    <p class="meaning">Choose a topic, enter the values, and get the formula + working + final answer.</p>
+
+    <div class="solver-grid">
+      <label>
+        <b>Problem Category</b>
+        <select id="solveType" onchange="updateSolver()">
+          <option value="mean">Arithmetic Mean</option>
+          <option value="median">Median</option>
+          <option value="mode">Mode</option>
+          <option value="variance">Variance</option>
+          <option value="sd">Standard Deviation</option>
+          <option value="quadratic">Quadratic Equation</option>
+          <option value="ap">Arithmetic Progression</option>
+          <option value="gp">Geometric Progression</option>
+          <option value="percentage">Percentage</option>
+          <option value="simpleinterest">Simple Interest</option>
+          <option value="compoundinterest">Compound Interest</option>
+          <option value="distance">Coordinate Distance</option>
+          <option value="slope">Slope of a Line</option>
+          <option value="pythagoras">Pythagoras Theorem</option>
+        </select>
+      </label>
+      <div id="solverInputs"></div>
+    </div>
+
+    <button class="solve-btn" onclick="solveProblem()">⚙️ Solve Step-by-Step</button>
+    <div id="solution" class="solution"></div>
+  </section>
+
+  <section class="card" id="difficultProblems" style="margin-top:28px">
+    <span class="badge">🔥 DIFFICULT PROBLEMS</span>
+    <h2 style="margin:4px 0 6px">Advanced Problem Solving</h2>
+    <p class="meaning">Solve difficult degree-level problems with formula, steps, and final answer. Guided tutor examples work offline; live AI chat requires a connected AI service and is not claimed to be active in this standalone file.</p>
+    <div class="solver-grid">
+      <label><b>Topic</b><select id="difficultTopic" onchange="showDifficultProblem()">
+        <option value="trig">Trigonometry</option><option value="calculus">Calculus (basic derivatives)</option><option value="statistics">Statistics</option><option value="quadratic">Quadratic Equation</option><option value="ap">AP / GP</option><option value="probability">Probability</option><option value="coordinate">Coordinate Geometry</option>
+      </select></label>
+      <label><b>Degree / Value</b><input id="degreeInput" type="number" placeholder="Enter degree, e.g. 45" inputmode="decimal" onkeydown="if(event.key==='Enter') solveDegreeProblem()"></label>
+    </div>
+    <div id="advancedStatsInputs" style="display:none;margin-top:14px"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button class="solve-btn" onclick="solveDegreeProblem()">↵ Enter &amp; Solve</button>
+      <button class="quiz-btn secondary" onclick="document.getElementById('degreeInput').value='45';solveDegreeProblem()">Use 45°</button>
+    </div>
+    <div id="difficultFormula" class="solution" style="margin-top:14px"></div>
+  </section>
+
+  <div id="app"></div>
+
+  <section class="card" id="mathLens" style="margin-top:28px">
+    <span class="badge">📷 MATH LENS</span>
+    <h2 style="margin:4px 0 5px">Scan a Maths Problem</h2>
+    <p class="meaning">Take a photo or upload an image of a maths question. The image is previewed here and you can open Camera for visual search/recognition.</p>
+
+    <div class="lens-box">
+      <label class="upload-btn">
+        📸 Take Photo / Upload Image
+        <input id="lensInput" type="file" accept="image/*" capture="environment" onchange="previewLens(event)" hidden>
+      </label>
+      <div id="lensPreview" class="lens-preview">
+        <div>🧮</div>
+        <span>Your maths image will appear here</span>
+      </div>
+      <div class="lens-actions">
+        <button class="solve-btn" onclick="startCamera()">🔎 Take Photo</button>
+        <button class="quiz-btn secondary" onclick="clearLens()">✕ Clear</button>
+      </div>
+      <p id="lensStatus" class="meaning"></p>
+    </div>
+  </section>
+
+  <section class="card" id="quiz" style="margin-top:28px">
+    <span class="badge">📝 PURE MATHS QUIZ</span>
+    <h2 style="margin:4px 0 5px">Test Your Knowledge</h2>
+    <p class="meaning">10 questions • Instant checking • Score + explanations</p>
+    <div id="quizBox" style="margin-top:18px"></div>
+  </section>
+
+<section class="card" id="mathStatisticsGraphs" style="margin-top:28px">
+  <span class="badge">📈 PROFESSIONAL MATHS & STATISTICS GRAPHS</span>
+  <h2 style="margin:4px 0 6px">Graph Studio</h2>
+  <p class="meaning">Create, practise and understand professional mathematical and statistical graphs with labelled axes, scales, formulas and automatic calculations.</p>
+
+  <div class="solver-grid">
+    <label><b>Graph Type</b>
+      <select id="kiplerGraphType" onchange="drawKiplerGraph()">
+        <optgroup label="📊 Statistics">
+          <option value="bar">Bar Graph</option>
+          <option value="hist">Histogram</option>
+          <option value="pie">Pie Chart</option>
+          <option value="freqpoly">Frequency Polygon</option>
+          <option value="ogiveLess">Less-than Ogive</option>
+          <option value="ogiveMore">More-than Ogive</option>
+          <option value="scatter">Scatter Diagram</option>
+        </optgroup>
+        <optgroup label="📐 Mathematics">
+          <option value="line">Line Graph</option>
+          <option value="quadratic">Quadratic y = x²</option>
+          <option value="linear">Linear y = mx + c</option>
+          <option value="sine">Trigonometric y = sin(x)</option>
+          <option value="cosine">Trigonometric y = cos(x)</option>
+          <option value="coordinate">Coordinate Points</option>
+        </optgroup>
+      </select>
+    </label>
+    <label><b>Values / X values</b>
+      <textarea id="kiplerGraphValues" rows="2" placeholder="Example: 10, 15, 8, 20, 12" oninput="drawKiplerGraph()">10, 15, 8, 20, 12</textarea>
+    </label>
+    <label id="graphYInputWrap"><b>Y / Frequency values</b>
+      <textarea id="kiplerGraphYValues" rows="2" placeholder="Example: 5, 8, 12, 10, 6" oninput="drawKiplerGraph()">5, 8, 12, 10, 6</textarea>
+    </label>
+  </div>
+
+  <div id="graphEquationBox" class="kv-card" style="margin-top:10px;padding:12px">
+    <b>⚙️ Graph Settings</b>
+    <div class="solver-grid" style="margin-top:8px">
+      <label><b>m (slope)</b><input id="graphM" type="number" value="2" step="any" oninput="drawKiplerGraph()"></label>
+      <label><b>c (intercept)</b><input id="graphC" type="number" value="1" step="any" oninput="drawKiplerGraph()"></label>
+      <label><b>Start / class centres</b><input id="graphXLabels" placeholder="Optional: 10,20,30,40" oninput="drawKiplerGraph()"></label>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+    <button class="kv-btn primary" type="button" onclick="drawKiplerGraph()">📊 Draw Graph</button>
+    <button class="kv-btn" type="button" onclick="graphExample('statistics')">📊 Statistics Example</button>
+    <button class="kv-btn" type="button" onclick="graphExample('maths')">📐 Maths Example</button>
+    <button class="kv-btn" type="button" onclick="downloadKiplerGraph()">⬇️ Save Graph</button>
+    <button class="kv-btn" type="button" onclick="clearKiplerGraph()">✕ Clear</button>
+  </div>
+
+  <div class="kv-card" style="margin-top:14px;padding:10px;overflow:hidden">
+    <canvas id="kiplerGraphCanvas" width="1000" height="560" style="width:100%;height:auto;max-width:100%;display:block;border-radius:10px"></canvas>
+    <div id="kiplerGraphInfo" class="kv-result">Choose a graph and enter your data.</div>
+  </div>
+
+  <div class="kv-card" style="margin-top:12px;padding:12px">
+    <b>🎓 Professional Graph Features</b>
+    <div class="kv-badges" style="margin-top:8px">
+      <span class="kv-badge">Axes & scale</span><span class="kv-badge">Grid lines</span><span class="kv-badge">Data labels</span><span class="kv-badge">Frequency graphs</span><span class="kv-badge">Cumulative frequency</span><span class="kv-badge">Scatter diagram</span><span class="kv-badge">Trigonometry</span><span class="kv-badge">Coordinate geometry</span><span class="kv-badge">Save as PNG</span>
+    </div>
+    <p class="meaning" style="margin-bottom:0;margin-top:10px"><b>Exam practice:</b> Bar graph • Histogram • Frequency polygon • Less-than/More-than ogive • Pie chart • Scatter diagram • Line graph • Quadratic • Linear • Sine/Cosine • Coordinate points.</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const parse=id=>(($(id)?.value||'').match(/-?\d+(?:\.\d+)?/g)||[]).map(Number).filter(Number.isFinite);
+  function canvas(){const c=$('kiplerGraphCanvas');if(!c)return null;const d=window.devicePixelRatio||1,w=1000,h=560;c.width=w*d;c.height=h*d;c.style.height='auto';const ctx=c.getContext('2d');ctx.setTransform(d,0,0,d,0,0);ctx.clearRect(0,0,w,h);return {c,ctx,w,h};}
+  function axes(ctx,w,h,xMin,xMax,yMin,yMax,xTitle='X-axis',yTitle='Y-axis'){
+    const L=78,R=28,T=35,B=68,pw=w-L-R,ph=h-T-B, sx=x=>L+(x-xMin)/(xMax-xMin||1)*pw, sy=y=>T+(yMax-y)/(yMax-yMin||1)*ph;
+    ctx.font='13px Arial';ctx.textAlign='center';ctx.lineWidth=1;ctx.strokeStyle='#d7dee8';
+    const xt=Math.max(2,Math.min(10,Math.ceil((xMax-xMin)/2))), yt=Math.max(2,Math.min(10,Math.ceil((yMax-yMin)/2)));
+    for(let i=0;i<=10;i++){let x=xMin+(xMax-xMin)*i/10,px=sx(x);ctx.beginPath();ctx.moveTo(px,T);ctx.lineTo(px,T+ph);ctx.stroke();ctx.fillStyle='#475569';ctx.fillText(String(Math.round(x*100)/100),px,h-B+22)}
+    for(let i=0;i<=8;i++){let y=yMin+(yMax-yMin)*i/8,py=sy(y);ctx.beginPath();ctx.moveTo(L,py);ctx.lineTo(w-R,py);ctx.stroke();ctx.textAlign='right';ctx.fillStyle='#475569';ctx.fillText(String(Math.round(y*100)/100),L-9,py+4)}
+    ctx.strokeStyle='#334155';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(L,sy(Math.max(yMin,Math.min(0,yMax))));ctx.lineTo(w-R,sy(Math.max(yMin,Math.min(0,yMax))));ctx.stroke();ctx.beginPath();ctx.moveTo(sx(Math.max(xMin,Math.min(0,xMax))),T);ctx.lineTo(sx(Math.max(xMin,Math.min(0,xMax))),T+ph);ctx.stroke();
+    ctx.fillStyle='#334155';ctx.textAlign='center';ctx.font='bold 14px Arial';ctx.fillText(xTitle,w/2,h-16);ctx.save();ctx.translate(18,h/2);ctx.rotate(-Math.PI/2);ctx.fillText(yTitle,0,0);ctx.restore();return {L,R,T,B,pw,ph,sx,sy};
+  }
+  function graphXY(ctx,a,xs,ys,label){ctx.strokeStyle='#4f46e5';ctx.fillStyle='#4f46e5';ctx.lineWidth=3;ctx.beginPath();xs.forEach((x,i)=>{const px=a.sx(x),py=a.sy(ys[i]);i?ctx.lineTo(px,py):ctx.moveTo(px,py)});ctx.stroke();xs.forEach((x,i)=>{const px=a.sx(x),py=a.sy(ys[i]);ctx.beginPath();ctx.arc(px,py,5,0,Math.PI*2);ctx.fill();});}
+  window.drawKiplerGraph=function(){
+    const type=$('kiplerGraphType')?.value||'bar', x=parse('kiplerGraphValues'), y=parse('kiplerGraphYValues'), g=canvas(), info=$('kiplerGraphInfo');if(!g)return;const {ctx,w,h}=g;
+    if(type==='quadratic'||type==='sine'||type==='cosine'||type==='linear'){
+      let xmin=-10,xmax=10,fn,formula;if(type==='quadratic'){xmin=-5;xmax=5;fn=z=>z*z;formula='y = x²'}else if(type==='linear'){const m=Number($('graphM').value)||0,c=Number($('graphC').value)||0;fn=z=>m*z+c;formula=`y = ${m}x ${c>=0?'+':'−'} ${Math.abs(c)}`}else if(type==='sine'){fn=z=>Math.sin(z*Math.PI/180);formula='y = sin(x)'}else{fn=z=>Math.cos(z*Math.PI/180);formula='y = cos(x)'}
+      const pts=Array.from({length:401},(_,i)=>{const z=xmin+(xmax-xmin)*i/400;return [z,fn(z)]}), ys=pts.map(p=>p[1]), ymin=Math.min(...ys),ymax=Math.max(...ys);const pad=(ymax-ymin||1)*.12,a=axes(ctx,w,h,xmin,xmax,ymin-pad,ymax+pad,'x','y');ctx.strokeStyle='#4f46e5';ctx.lineWidth=4;ctx.beginPath();pts.forEach((p,i)=>{const px=a.sx(p[0]),py=a.sy(p[1]);i?ctx.lineTo(px,py):ctx.moveTo(px,py)});ctx.stroke();info.innerHTML=`<b>Formula:</b> ${formula} &nbsp; • &nbsp; Graph plotted with labelled axes and scale.`;return;
+    }
+    if(type==='coordinate'||type==='scatter'||type==='line'){
+      if(x.length<2||y.length!==x.length){info.innerHTML='⚠️ Enter equal X and Y values (at least 2).';return}const xmin=Math.min(...x),xmax=Math.max(...x),ymin=Math.min(...y),ymax=Math.max(...y),xp=(xmax-xmin||1)*.15,yp=(ymax-ymin||1)*.15,a=axes(ctx,w,h,xmin-xp,xmax+xp,ymin-yp,ymax+yp,'X','Y');ctx.fillStyle='#4f46e5';x.forEach((z,i)=>{const px=a.sx(z),py=a.sy(y[i]);ctx.beginPath();ctx.arc(px,py,6,0,Math.PI*2);ctx.fill();ctx.fillStyle='#334155';ctx.font='12px Arial';ctx.fillText(`(${z}, ${y[i]})`,px+8,py-8);ctx.fillStyle='#4f46e5'});if((type==='scatter'||type==='line')&&x.length>1){let mx=x.reduce((a,b)=>a+b,0)/x.length,my=y.reduce((a,b)=>a+b,0)/y.length,sxy=0,sxx=0;for(let i=0;i<x.length;i++){sxy+=(x[i]-mx)*(y[i]-my);sxx+=(x[i]-mx)**2}if(type==='scatter'&&sxx){const m=sxy/sxx,c=my-m*mx;ctx.strokeStyle='#dc2626';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a.sx(xmin-xp),a.sy(m*(xmin-xp)+c));ctx.lineTo(a.sx(xmax+xp),a.sy(m*(xmax+xp)+c));ctx.stroke();info.innerHTML=`<b>Scatter diagram:</b> ${x.length} points • Trend line: y = ${m.toFixed(3)}x ${c>=0?'+':'−'} ${Math.abs(c).toFixed(3)}`;return}}if(type==='line'){const pairs=x.map((v,i)=>({x:v,y:y[i]})).sort((a,b)=>a.x-b.x);ctx.strokeStyle='#0f766e';ctx.lineWidth=3;ctx.beginPath();pairs.forEach((pt,i)=>{const px=a.sx(pt.x),py=a.sy(pt.y);i?ctx.lineTo(px,py):ctx.moveTo(px,py)});ctx.stroke();info.innerHTML=`<b>Line Graph:</b> ${pairs.length} points connected in ascending X order.`;}else{info.innerHTML=`<b>Coordinate graph:</b> ${x.length} plotted point(s).`;}return;
+    }
+    if(!x.length){info.innerHTML='⚠️ Enter numeric values first.';return}
+    if(type==='pie'){const total=x.reduce((a,b)=>a+b,0);if(total<=0){info.innerHTML='⚠️ Values must have a positive total.';return}const cx=w/2,cy=h/2,r=180;let angle=-Math.PI/2;const labels=x.map((v,i)=>`Item ${i+1}: ${v}`);x.forEach((v,i)=>{const end=angle+v/total*Math.PI*2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,angle,end);ctx.closePath();ctx.fillStyle=`hsl(${i*360/x.length} 65% 55%)`;ctx.fill();ctx.strokeStyle='#fff';ctx.stroke();const mid=(angle+end)/2;ctx.fillStyle='#334155';ctx.font='bold 12px Arial';ctx.fillText(Math.round(v/total*100)+'%',cx+Math.cos(mid)*r*.68,cy+Math.sin(mid)*r*.68);angle=end});ctx.fillStyle='#334155';ctx.font='bold 18px Arial';ctx.fillText('Pie Chart',cx,28);info.innerHTML=`<b>Pie Chart:</b> Total = ${total}. Each sector shows its percentage of the whole.`;return}
+    if(type==='freqpoly'){const vals=y.length?y:x;const xs=(x.length===vals.length&&y.length)?x:vals.map((_,i)=>i+1),xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=0,ymax=Math.max(...vals,1),a=axes(ctx,w,h,xmin,xmax,ymin,ymax*1.15,'Class mark / X','Frequency');graphXY(ctx,a,xs,vals);info.innerHTML='<b>Frequency Polygon:</b> plot frequency against class marks and join the points.';return}
+    if(type==='ogiveLess'||type==='ogiveMore'){const f=y.length?y:x.map((_,i)=>i+1),upper=x.length?x:f.map((_,i)=>i+1),cum=[];let t=0;if(type==='ogiveLess'){f.forEach(v=>{t+=v;cum.push(t)})}else{let total=f.reduce((a,b)=>a+b,0);for(let i=0;i<f.length;i++){cum.push(total);total-=f[i]}}const a=axes(ctx,w,h,Math.min(...upper),Math.max(...upper),0,Math.max(...cum,1)*1.15,'Class boundary','Cumulative frequency');graphXY(ctx,a,upper,cum);info.innerHTML=`<b>${type==='ogiveLess'?'Less-than':'More-than'} Ogive:</b> cumulative frequency curve.`;return}
+    const vals=x,max=Math.max(...vals,1),a=axes(ctx,w,h,0,vals.length+1,0,max*1.15,'Category / Observation','Frequency / Value'),bw=a.pw/vals.length*.65;vals.forEach((v,i)=>{const px=a.sx(i+1),py=a.sy(v),base=a.sy(0);if(type==='hist'){ctx.fillStyle='#6366f1';ctx.fillRect(px-bw/2,py,bw,base-py)}else{ctx.fillStyle='#7c3aed';ctx.fillRect(px-bw/2,py,bw,base-py)}ctx.fillStyle='#334155';ctx.font='bold 12px Arial';ctx.textAlign='center';ctx.fillText(String(v),px,py-8);ctx.fillText(String(i+1),px,h-a.B+22)});info.innerHTML=type==='hist'?'<b>Histogram:</b> adjacent bars represent frequency groups. For an exact continuous-series histogram, use class boundaries as X values.':'<b>Bar Graph:</b> compares each category or frequency.';
+  };
+  window.graphExample=function(kind){if(kind==='statistics'){$('kiplerGraphType').value='hist';$('kiplerGraphValues').value='10,20,30,40,50';$('kiplerGraphYValues').value='3,7,12,8,4'}else{$('kiplerGraphType').value='linear';$('graphM').value='2';$('graphC').value='1';$('kiplerGraphValues').value='-5,0,5,10';$('kiplerGraphYValues').value='-9,1,11,21'}drawKiplerGraph()};
+  window.downloadKiplerGraph=function(){const c=$('kiplerGraphCanvas');if(!c)return;const a=document.createElement('a');a.download='kipler-graph.png';a.href=c.toDataURL('image/png');a.click()};
+  window.clearKiplerGraph=function(){const c=$('kiplerGraphCanvas');if(c)c.getContext('2d').clearRect(0,0,c.width,c.height);if($('kiplerGraphValues'))$('kiplerGraphValues').value='';if($('kiplerGraphYValues'))$('kiplerGraphYValues').value='';if($('kiplerGraphInfo'))$('kiplerGraphInfo').textContent='Graph cleared.'};
+  function ready(){drawKiplerGraph()} if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready();
+})();
+</script>
+
+</main>
+<footer>Kipler Mathematics and Statistics • Learn → Practice → Master</footer>
+<script>
+const data = [
+["Arithmetic & Algebra",[
+["Algebraic Identities",["(a+b)² = a² + 2ab + b²","(a-b)² = a² - 2ab + b²","a²-b² = (a-b)(a+b)","(a+b)³ = a³+3a²b+3ab²+b³","(a-b)³ = a³-3a²b+3ab²-b³","a³+b³=(a+b)(a²-ab+b²)","a³-b³=(a-b)(a²+ab+b²)"]],
+["Quadratic Equation",["ax²+bx+c=0","x = (-b ± √(b²-4ac))/(2a)","Discriminant D=b²-4ac","Sum of roots = -b/a","Product of roots = c/a"]],
+["AP & GP Basics",["AP: aₙ=a+(n-1)d","AP: Sₙ=n/2[2a+(n-1)d]","GP: aₙ=arⁿ⁻¹","GP: Sₙ=a(rⁿ-1)/(r-1), r≠1","Infinite GP: S∞=a/(1-r), |r|<1"]],
+["Binomial Theorem",["(a+b)ⁿ = Σ C(n,r)aⁿ⁻ʳbʳ","C(n,r)=n!/[r!(n-r)!]","C(n,r)=C(n,n-r)"]]
+]],
+["Indices & Logarithms",[
+["Laws of Indices",["aᵐaⁿ=aᵐ⁺ⁿ","aᵐ/aⁿ=aᵐ⁻ⁿ","(aᵐ)ⁿ=aᵐⁿ","a⁻ⁿ=1/aⁿ","a⁰=1","a^(1/n)=ⁿ√a"]],
+["Logarithms",["logₐ(xy)=logₐx+logₐy","logₐ(x/y)=logₐx-logₐy","logₐ(xⁿ)=n logₐx","logₐ1=0","logₐa=1","Change of base: logₐb=ln(b)/ln(a)"]]
+]],
+["Sets & Functions",[
+["Sets",["n(A∪B)=n(A)+n(B)-n(A∩B)","n(A')=n(U)-n(A)","De Morgan: (A∪B)'=A'∩B'","De Morgan: (A∩B)'=A'∪B'"]],
+["Functions",["(f∘g)(x)=f(g(x))","f⁻¹(f(x))=x (when inverse exists)","Even: f(-x)=f(x)","Odd: f(-x)=-f(x)"]]
+]],
+["Coordinate Geometry",[
+["Straight Line",["Slope m=(y₂-y₁)/(x₂-x₁)","y-y₁=m(x-x₁)","y=mx+c","Two-point: (y-y₁)/(y₂-y₁)=(x-x₁)/(x₂-x₁)","Distance = √[(x₂-x₁)²+(y₂-y₁)²]","Midpoint=((x₁+x₂)/2,(y₁+y₂)/2)"]],
+["Circle",["(x-h)²+(y-k)²=r²","x²+y²+2gx+2fy+c=0","Centre=(-g,-f)","Radius=√(g²+f²-c)"]],
+["Conic Sections",["Parabola: y²=4ax","Parabola: x²=4ay","Ellipse: x²/a²+y²/b²=1","Hyperbola: x²/a²-y²/b²=1"]]
+]],
+["Trigonometry",[
+["Basic Ratios",["sinθ=opposite/hypotenuse","cosθ=adjacent/hypotenuse","tanθ=opposite/adjacent","cosecθ=1/sinθ","secθ=1/cosθ","cotθ=1/tanθ"]],
+["Identities",["sin²θ+cos²θ=1","1+tan²θ=sec²θ","1+cot²θ=cosec²θ","sin(A±B)=sinA cosB ± cosA sinB","cos(A±B)=cosA cosB ∓ sinA sinB","tan(A±B)=(tanA±tanB)/(1∓tanA tanB)"]],
+["Double Angle",["sin2A=2sinAcosA","cos2A=cos²A-sin²A=1-2sin²A=2cos²A-1","tan2A=2tanA/(1-tan²A)"]]
+]],
+["Complex Numbers",[
+["Complex Basics",["z=a+ib","i²=-1","|z|=√(a²+b²)","Conjugate of z=a-ib","z·z̄=|z|²"]],
+["Polar / De Moivre",["z=r(cosθ+i sinθ)","[r(cosθ+i sinθ)]ⁿ=rⁿ(cos nθ+i sin nθ)"]]
+]],
+["Matrices & Determinants",[
+["Matrices",["For A=[a b; c d], |A|=ad-bc","A⁻¹=1/(ad-bc)[d -b; -c a], if |A|≠0","(AB)ᵀ=BᵀAᵀ"]],
+["Determinants",["2×2 determinant = ad-bc","|A B; C D|=AD-BC","det(AB)=det(A)det(B)"]]
+]],
+["Calculus",[
+["Limits",["lim(x→a) [f(x)+g(x)] = lim f(x)+lim g(x)","lim(x→0) sinx/x = 1","lim(x→0) (1-cosx)/x² = 1/2"]],
+["Differentiation",["d/dx(c)=0","d/dx(xⁿ)=nxⁿ⁻¹","d/dx(eˣ)=eˣ","d/dx(lnx)=1/x","d/dx(sinx)=cosx","d/dx(cosx)=-sinx","d/dx(tanx)=sec²x","Product: (uv)'=u'v+uv'","Quotient: (u/v)'=(vu'-uv')/v²","Chain: d[f(g(x))]/dx=f'(g(x))g'(x)"]],
+["Integration",["∫xⁿdx=xⁿ⁺¹/(n+1)+C, n≠-1","∫1/x dx=ln|x|+C","∫eˣdx=eˣ+C","∫sinx dx=-cosx+C","∫cosx dx=sinx+C","Integration by parts: ∫u dv=uv-∫v du","∫ₐᵇf(x)dx = F(b)-F(a)"]]
+]],
+["Vectors",[
+["Vector Basics",["|a|=√(a₁²+a₂²+a₃²)","a·b=|a||b|cosθ","a·b=a₁b₁+a₂b₂+a₃b₃","a×b=|a||b|sinθ n̂","a·b=0 ⇒ vectors are perpendicular"]],
+["3D Geometry",["Distance between points=√[(x₂-x₁)²+(y₂-y₁)²+(z₂-z₁)²]","Sphere: (x-a)²+(y-b)²+(z-c)²=r²"]]
+]],
+["Differential Equations",[
+["First Order",["dy/dx=f(x)g(y) ⇒ dy/g(y)=f(x)dx","Linear: dy/dx+Py=Q","IF=e^(∫Pdx)","Solution: y·IF=∫Q·IF dx+C"]]
+]],
+["Number Theory",[
+["Basic",["Euclidean algorithm: a=bq+r","If a|b and a|c, then a|(mb+nc)","For positive integers: HCF(a,b)×LCM(a,b)=a×b"]],
+["Permutation & Combination",["nPr=n!/(n-r)!","nCr=n!/[r!(n-r)!]","nPr=r!·nCr"]]
+]],
+["Inequalities",[
+["Standard",["a²≥0","AM≥GM for positive numbers: (a+b)/2 ≥ √ab","|x|<a ⇒ -a<x<a","|x|>a ⇒ x<-a or x>a"]]
+]],
+["Sequences & Series",[
+["Standard Sums",["Σn=n(n+1)/2","Σn²=n(n+1)(2n+1)/6","Σn³=[n(n+1)/2]²","1+2+...+n=n(n+1)/2"]],
+["Special Series",["1+r+r²+...+rⁿ=(1-rⁿ⁺¹)/(1-r), r≠1","1+r+r²+...=1/(1-r), |r|<1"]]
+]]
+];
+
+let cat="All", fav=new Set(JSON.parse(localStorage.getItem("favMath")||"[]"));
+function esc(s){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")}
+function allSections(){return data.flatMap(([c,ss])=>ss.map(([t,fs])=>({cat:c,title:t,fs})))}
+function renderTabs(){
+ const cats=[L("all"),...data.map(x=>x[0]),L("favorites")];
+ document.getElementById("tabs").innerHTML=cats.map(c=>`<button class="${c===cat?'active':''}" onclick="cat='${c.replaceAll("'","\\'")}';render()">${c}</button>`).join("");
+}
+function toggleFav(key){fav.has(key)?fav.delete(key):fav.add(key);localStorage.setItem("favMath",JSON.stringify([...fav]));render()}
+function render(){
+ renderTabs();
+ const q=document.getElementById("search").value.toLowerCase().trim();
+ let sections=allSections().filter(s=>{
+   const catOK=cat===L("all") || (cat===L("favorites")?s.fs.some((_,i)=>fav.has(s.cat+"|"+s.title+"|"+i)):s.cat===cat);
+   const text=(s.cat+" "+s.title+" "+s.fs.join(" ")).toLowerCase();
+   return catOK && (!q || text.includes(q));
+ });
+ const app=document.getElementById("app");
+ if(!sections.length){app.innerHTML='<div class="empty">'+L('noResults')+'</div>';return}
+ let out="";
+ const grouped={};
+ sections.forEach(s=>(grouped[s.cat]??=[]).push(s));
+ Object.entries(grouped).forEach(([c,ss])=>{
+   out+=`<h2 class="section-title">${esc(c)}</h2><div class="grid">`;
+   ss.forEach(s=>{
+     out+=`<article class="card"><span class="badge">${esc(s.cat)}</span><h3>${esc(s.title)}</h3>`;
+     s.fs.forEach((f,i)=>{let key=s.cat+"|"+s.title+"|"+i;out+=`<div class="formula"><button class="star ${fav.has(key)?'on':''}" onclick="toggleFav('${key.replaceAll("'","\\'")}')">${fav.has(key)?"★":"☆"}</button>${esc(f)}</div>`});
+     out+="</article>";
+   });
+   out+="</div>";
+ });
+ app.innerHTML=out;
+}
+
+const solverFields = {
+  mean: [['numbers','Numbers (comma separated)','10, 20, 30, 40, 50']],
+  median: [['numbers','Numbers (comma separated)','10, 20, 30, 40, 50']],
+  mode: [['numbers','Numbers (comma separated)','10, 20, 20, 30, 40']],
+  variance: [['numbers','Numbers (comma separated)','10, 20, 30, 40, 50']],
+  sd: [['numbers','Numbers (comma separated)','10, 20, 30, 40, 50']],
+  quadratic: [['a','a','1'],['b','b','-5'],['c','c','6']],
+  ap: [['a','First term (a)','2'],['d','Common difference (d)','3'],['n','Number of terms (n)','10']],
+  gp: [['a','First term (a)','2'],['r','Common ratio (r)','3'],['n','Number of terms (n)','5']],
+  percentage: [['part','Part / obtained value','45'],['total','Total value','60']],
+  simpleinterest: [['p','Principal (P)','10000'],['r','Rate % (R)','8'],['t','Time in years (T)','2']],
+  compoundinterest: [['p','Principal (P)','10000'],['r','Rate % (R)','10'],['t','Time in years (T)','2']],
+  distance: [['x1','x₁','2'],['y1','y₁','3'],['x2','x₂','8'],['y2','y₂','11']],
+  slope: [['x1','x₁','2'],['y1','y₁','3'],['x2','x₂','8'],['y2','y₂','11']],
+  pythagoras: [['a','Side a','3'],['b','Side b','4']]
+};
+
+const lang = {
+ en:{brandSub:'Kipler Mathematics and Statistics • Formulas • Quick Revision',search:'Search formulas... e.g. logarithm, sin, derivative',
+ camera:'📷 Camera',quiz:'📝 Quiz',heroTitle:'📚 All-in-One Pure Mathematics',heroText:'Quick formula reference for school, intermediate and degree-level revision.',
+ solverBadge:'🧠 STEP-BY-STEP PROBLEM SOLVER',solverTitle:'Solve a Maths Problem',solverText:'Choose a topic, enter the values, and get the formula + working + final answer.',
+ problemCategory:'Problem Category',solve:'⚙️ Solve Step-by-Step',scanBadge:'📷 MATH CAMERA',scanTitle:'Scan a Maths Problem',scanText:'Take a photo or upload an image of a maths question. The image is previewed here.',takeUpload:'📸 Take Photo / Upload Image',takePhoto:'📷 Take Photo',clear:'✕ Clear',placeholder:'Your maths image will appear here',
+ all:'All',favorites:'★ Favorites',noResults:'🔎 No formulas found.<br>Try another keyword.',step:'Step',answer:'🎯 Answer',valid:'⚠️ Please enter valid numbers in all fields.',correct:'✅ Correct!',incorrect:'❌ Incorrect.',next:'Next Question →',finish:'🏁 Finish',restart:'↻ Restart Quiz',tryAgain:'Try Again',complete:'🎉 Quiz Complete!',excellent:'Excellent work! 🔥',practice:'Keep practicing — you can improve this score! 💪'},
+ te:{brandSub:'ప్యూర్ మ్యాథ్స్ • ఫార్ములాలు • త్వరిత రివిజన్',search:'ఫార్ములాలు వెతకండి... ఉదా: logarithm, sin, derivative',
+ camera:'📷 కెమెరా',quiz:'📝 క్విజ్',heroTitle:'📚 పూర్తి ప్యూర్ మ్యాథమెటిక్స్',heroText:'స్కూల్, ఇంటర్మీడియట్ మరియు డిగ్రీ రివిజన్ కోసం ముఖ్యమైన ఫార్ములాలు.',
+ solverBadge:'🧠 దశలవారీ సమస్య పరిష్కారం',solverTitle:'గణిత సమస్యను పరిష్కరించండి',solverText:'టాపిక్ ఎంచుకుని విలువలు ఇవ్వండి. ఫార్ములా, పని విధానం, చివరి సమాధానం పొందండి.',
+ problemCategory:'సమస్య విభాగం',solve:'⚙️ దశలవారీగా పరిష్కరించు',scanBadge:'📷 మ్యాథ్ కెమెరా',scanTitle:'గణిత సమస్యను స్కాన్ చేయండి',scanText:'గణిత ప్రశ్నను ఫోటో తీయండి లేదా చిత్రాన్ని అప్‌లోడ్ చేయండి. చిత్రం ఇక్కడ కనిపిస్తుంది.',takeUpload:'📸 ఫోటో తీయండి / చిత్రం అప్‌లోడ్ చేయండి',takePhoto:'📷 ఫోటో తీయండి',clear:'✕ క్లియర్',placeholder:'మీ గణిత చిత్రం ఇక్కడ కనిపిస్తుంది',
+ all:'అన్నీ',favorites:'★ ఇష్టమైనవి',noResults:'🔎 ఫార్ములాలు దొరకలేదు.<br>మరో పదంతో ప్రయత్నించండి.',step:'దశ',answer:'🎯 సమాధానం',valid:'⚠️ అన్ని ఫీల్డుల్లో సరైన సంఖ్యలు ఇవ్వండి.',correct:'✅ సరైనది!',incorrect:'❌ తప్పు.',next:'తదుపరి ప్రశ్న →',finish:'🏁 ముగించు',restart:'↻ క్విజ్ మళ్లీ ప్రారంభించు',tryAgain:'మళ్లీ ప్రయత్నించండి',complete:'🎉 క్విజ్ పూర్తయింది!',excellent:'చాలా బాగా చేశారు! 🔥',practice:'ప్రాక్టీస్ కొనసాగించండి — మీ స్కోర్ ఇంకా మెరుగుపడుతుంది! 💪'}
+};
+let currentLang=localStorage.getItem('mathLang')||'en';
+function L(k){return (lang[currentLang]&&lang[currentLang][k])||lang.en[k]||k}
+function setLanguage(v){currentLang=v;localStorage.setItem('mathLang',v);applyLanguage();render();updateSolver();renderQuiz()}
+function applyLanguage(){
+ document.querySelector('.brand p').textContent=L('brandSub');
+ document.getElementById('search').placeholder=L('search');
+ document.querySelector('header + main .theme').textContent=L('camera');
+ const buttons=document.querySelectorAll('main > div:first-of-type .theme'); if(buttons[1]) buttons[1].textContent=L('quiz');
+ document.querySelector('#solver .badge').textContent=L('solverBadge');
+ document.querySelector('#solver h2').textContent=L('solverTitle');
+ document.querySelector('#solver .meaning').textContent=L('solverText');
+ document.querySelector('#solver label b').textContent=L('problemCategory');
+ document.querySelector('#solver > .solve-btn').textContent=L('solve');
+ document.querySelector('#mathLens .badge').textContent=L('scanBadge');
+ document.querySelector('#mathLens h2').textContent=L('scanTitle');
+ document.querySelector('#mathLens > .meaning').textContent=L('scanText');
+ document.querySelector('#mathLens .upload-btn').childNodes[0].textContent=L('takeUpload')+' ';
+ document.querySelector('#mathLens .lens-actions .solve-btn').textContent=L('takePhoto');
+ document.querySelector('#mathLens .quiz-btn').textContent=L('clear');
+ if(!lensImageUrl) document.querySelector('#lensPreview span').textContent=L('placeholder');
+ const sel=document.getElementById('languageSelect'); if(sel) sel.value=currentLang;
+}
+function updateSolver(){
+  const type=document.getElementById('solveType').value;
+  document.getElementById('solverInputs').innerHTML =
+    '<div class="input-row">'+solverFields[type].map(([id,label,val]) =>
+      `<label>${label}<input id="s_${id}" type="text" value="${val}"></label>`).join('')+'</div>';
+  document.getElementById('solution').innerHTML='';
+}
+function num(id){return parseFloat(document.getElementById('s_'+id).value)}
+function nums(id){return document.getElementById('s_'+id).value.split(',').map(x=>parseFloat(x.trim())).filter(x=>Number.isFinite(x))}
+function fmt(x){return Number.isInteger(x)?String(x):x.toFixed(4).replace(/0+$/,'').replace(/\.$/,'')}
+function showSolution(title,steps,answer){
+  document.getElementById('solution').innerHTML=`<div class="solution-box"><h3 style="margin:0 0 5px">✅ ${title}</h3>
+  ${steps.map((s,i)=>`<div class="step"><b>Step ${i+1}:</b> ${s}</div>`).join('')}
+  <div class="answer">🎯 Answer: ${answer}</div></div>`;
+}
+function solveProblem(){
+  const t=document.getElementById('solveType').value;
+  try{
+    if(['mean','median','mode','variance','sd'].includes(t)){
+      const a=nums('numbers'); if(!a.length) throw Error();
+      const n=a.length, sum=a.reduce((x,y)=>x+y,0), mean=sum/n;
+      if(t==='mean') return showSolution('Arithmetic Mean',
+        [`Data: ${a.join(', ')}`,`Number of values n = ${n}`,`Σx = ${fmt(sum)}`,`Mean = Σx / n = ${fmt(sum)} / ${n}`],fmt(mean));
+      if(t==='median'){const s=[...a].sort((x,y)=>x-y),m=n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2;
+        return showSolution('Median',[`Arrange data: ${s.join(', ')}`,`n = ${n}`,n%2?`Middle value = ${fmt(m)}`:`Middle two values = ${s[n/2-1]} and ${s[n/2]}`,n%2?'Median = middle value':`Median = (${s[n/2-1]} + ${s[n/2]}) / 2`],fmt(m));}
+      if(t==='mode'){const c={};a.forEach(x=>c[x]=(c[x]||0)+1);const max=Math.max(...Object.values(c));const modes=Object.keys(c).filter(x=>c[x]===max);
+        return showSolution('Mode',[`Count the frequency of each value.`,`Highest frequency = ${max}`,`Values with highest frequency: ${modes.join(', ')}`],modes.length===n?'No unique mode':modes.join(', '));}
+      const ss=a.reduce((z,x)=>z+(x-mean)**2,0),v=ss/n;
+      return showSolution(t==='variance'?'Variance':'Standard Deviation',
+        [`Mean = Σx / n = ${fmt(sum)} / ${n} = ${fmt(mean)}`,`Σ(x − x̄)² = ${fmt(ss)}`,`Variance = Σ(x − x̄)² / n = ${fmt(ss)} / ${n} = ${fmt(v)}`,...(t==='sd'?[`Standard deviation = √Variance = √${fmt(v)}`]:[])],
+        fmt(t==='sd'?Math.sqrt(v):v));
+    }
+    if(t==='quadratic'){const a=num('a'),b=num('b'),c=num('c'),D=b*b-4*a*c;if(!a)throw Error();
+      const ans=D>0?`x₁ = ${fmt((-b+Math.sqrt(D))/(2*a))}, x₂ = ${fmt((-b-Math.sqrt(D))/(2*a))}`:D===0?`x = ${fmt(-b/(2*a))}`:`Complex roots: x = ${fmt(-b/(2*a))} ± ${fmt(Math.sqrt(-D)/(2*a))}i`;
+      return showSolution('Quadratic Equation',[`Equation: ${a}x² + (${b})x + ${c} = 0`,`Discriminant D = b² − 4ac = ${fmt(D)}`,`x = [−b ± √D] / 2a`, `Substitute the values into the quadratic formula.`],ans);
+    }
+    if(t==='ap'){const a=num('a'),d=num('d'),n=num('n'),an=a+(n-1)*d,s=n/2*(2*a+(n-1)*d);return showSolution('Arithmetic Progression',[`a = ${a}, d = ${d}, n = ${n}`,`aₙ = a + (n−1)d = ${a} + (${n}−1)${d} = ${fmt(an)}`,`Sₙ = n/2[2a+(n−1)d] = ${fmt(s)}`],`aₙ = ${fmt(an)}, Sₙ = ${fmt(s)}`)}
+    if(t==='gp'){const a=num('a'),r=num('r'),n=num('n'),an=a*r**(n-1),s=r===1?a*n:a*(r**n-1)/(r-1);return showSolution('Geometric Progression',[`a = ${a}, r = ${r}, n = ${n}`,`aₙ = arⁿ⁻¹ = ${fmt(an)}`,`Sₙ = a(rⁿ−1)/(r−1) = ${fmt(s)}`],`aₙ = ${fmt(an)}, Sₙ = ${fmt(s)}`)}
+    if(t==='percentage'){const p=num('part'),tot=num('total');return showSolution('Percentage',[`Percentage = (Part / Total) × 100`,`= (${p} / ${tot}) × 100`],fmt(p/tot*100)+'%')}
+    if(t==='simpleinterest'){const p=num('p'),r=num('r'),tt=num('t'),si=p*r*tt/100;return showSolution('Simple Interest',[`SI = PRT / 100`,`= ${p} × ${r} × ${tt} / 100 = ${fmt(si)}`,`Amount = P + SI = ${fmt(p+si)}`],`SI = ${fmt(si)}, Amount = ${fmt(p+si)}`)}
+    if(t==='compoundinterest'){const p=num('p'),r=num('r'),tt=num('t'),A=p*(1+r/100)**tt;return showSolution('Compound Interest',[`A = P(1 + R/100)ᵀ`,`= ${p}(1 + ${r}/100)^${tt}`,`A = ${fmt(A)}`,`CI = A − P = ${fmt(A-p)}`],`CI = ${fmt(A-p)}, Amount = ${fmt(A)}`)}
+    if(t==='distance'){const x1=num('x1'),y1=num('y1'),x2=num('x2'),y2=num('y2'),d=Math.hypot(x2-x1,y2-y1);return showSolution('Distance',[`Distance = √[(x₂−x₁)² + (y₂−y₁)²]`,`= √[(${x2}-${x1})² + (${y2}-${y1})²]`,`= √${fmt((x2-x1)**2+(y2-y1)**2)}`],fmt(d))}
+    if(t==='slope'){const x1=num('x1'),y1=num('y1'),x2=num('x2'),y2=num('y2');if(x2===x1)return showSolution('Slope',[`m=(y₂−y₁)/(x₂−x₁)`,`Denominator = 0`],'Undefined (vertical line)');return showSolution('Slope',[`m=(y₂−y₁)/(x₂−x₁)`,`= (${y2}−${y1})/(${x2}−${x1})`,`= ${y2-y1}/${x2-x1}`],fmt((y2-y1)/(x2-x1)))}
+    if(t==='pythagoras'){const a=num('a'),b=num('b'),c=Math.hypot(a,b);return showSolution('Pythagoras Theorem',[`c² = a² + b²`,`c² = ${a}² + ${b}² = ${fmt(a*a+b*b)}`,`c = √${fmt(a*a+b*b)}`],fmt(c))}
+  }catch(e){document.getElementById('solution').innerHTML='<div class="solution-box">'+L('valid')+'</div>'}
+}
+
+function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("dark",document.body.classList.contains("dark"))}
+if(localStorage.getItem("dark")==="true")document.body.classList.add("dark");
+
+const quizQuestions = [
+ {q:"What is the value of (a+b)²?",o:["a²+b²","a²+2ab+b²","a²−2ab+b²","2a²+2b²"],a:1,e:"(a+b)² = a² + 2ab + b²."},
+ {q:"What is the discriminant of ax²+bx+c=0?",o:["b²+4ac","a²−4bc","b²−4ac","4ac−b²"],a:2,e:"D = b² − 4ac."},
+ {q:"What is the derivative of xⁿ?",o:["xⁿ⁻¹","nxⁿ⁻¹","n+x","xⁿ/n"],a:1,e:"d(xⁿ)/dx = nxⁿ⁻¹."},
+ {q:"What is ∫cos x dx?",o:["−sin x+C","cos x+C","sin x+C","tan x+C"],a:2,e:"∫cos x dx = sin x + C."},
+ {q:"Which identity is correct?",o:["sin²θ−cos²θ=1","sin²θ+cos²θ=1","sinθ+cosθ=1","tan²θ+sec²θ=1"],a:1,e:"sin²θ + cos²θ = 1."},
+ {q:"The slope through (x₁,y₁) and (x₂,y₂) is:",o:["(x₂−x₁)/(y₂−y₁)","(y₂+y₁)/(x₂+x₁)","(y₂−y₁)/(x₂−x₁)","x₁y₁/x₂y₂"],a:2,e:"m = (y₂−y₁)/(x₂−x₁)."},
+ {q:"The sum of the first n natural numbers is:",o:["n²","n(n+1)/2","n(n−1)/2","2n+1"],a:1,e:"Σn = n(n+1)/2."},
+ {q:"If z=a+ib, |z| equals:",o:["a+b","a−b","√(a²+b²)","a²+b²"],a:2,e:"|z| = √(a²+b²)."},
+ {q:"For an AP, the nth term is:",o:["arⁿ⁻¹","a+(n−1)d","a+nd²","n/2[2a+(n−1)d]"],a:1,e:"aₙ = a + (n−1)d."},
+ {q:"Standard deviation in terms of variance σ² is:",o:["σ²","2σ²","√σ²","1/σ²"],a:2,e:"σ = √(σ²)."},
+ {q:"Arithmetic mean of 10, 20 and 30 is:",o:["15","20","25","30"],a:1,e:"Mean = (10+20+30)/3 = 20."},
+ {q:"Median of 5, 9, 2, 7, 4 is:",o:["4","5","7","9"],a:1,e:"Arrange: 2,4,5,7,9. The middle value is 5."},
+ {q:"Mode of 2, 3, 3, 4, 5 is:",o:["2","3","4","5"],a:1,e:"3 occurs most frequently, so mode = 3."},
+ {q:"Range of 8, 3, 12, 5 is:",o:["7","8","9","10"],a:2,e:"Range = maximum − minimum = 12 − 3 = 9."},
+ {q:"If mean = 12 and number of observations = 5, the sum is:",o:["17","60","72","120"],a:1,e:"Sum = mean × n = 12 × 5 = 60."},
+ {q:"For grouped data, median uses which value first?",o:["N/2","N×2","N−2","2/N"],a:0,e:"The median position is found using N/2."},
+ {q:"If P(A)=0.4, then P(A') is:",o:["0.2","0.4","0.6","1.4"],a:2,e:"P(A') = 1 − P(A) = 0.6."},
+ {q:"Probability of getting a head on a fair coin is:",o:["0","1/4","1/2","1"],a:2,e:"There are 1 favorable outcome out of 2, so 1/2."},
+ {q:"det([[a,b],[c,d]]) equals:",o:["ab−cd","ad−bc","ac−bd","a+b+c+d"],a:1,e:"A 2×2 determinant is ad − bc."},
+ {q:"The inverse of a matrix exists when its determinant is:",o:["0","1 only","non-zero","negative only"],a:2,e:"A square matrix is invertible when det(A) ≠ 0."},
+ {q:"∫x dx equals:",o:["x+C","x²+C","x²/2+C","2x+C"],a:2,e:"∫x dx = x²/2 + C."},
+ {q:"d(sin x)/dx equals:",o:["−sin x","cos x","tan x","sec²x"],a:1,e:"The derivative of sin x is cos x."},
+ {q:"The common ratio of 2, 6, 18, 54 is:",o:["2","3","6","9"],a:1,e:"Each term is multiplied by 3, so r = 3."},
+ {q:"Sum of an infinite GP exists when:",o:["|r|<1","|r|>1","r=2","r=−2"],a:0,e:"An infinite geometric series converges when |r| < 1."},
+ {q:"Distance between (0,0) and (3,4) is:",o:["3","4","5","7"],a:2,e:"Distance = √(3²+4²) = 5."},
+ {q:"In degree mode, 90° in radians is:",o:["π/4","π/2","π","2π"],a:1,e:"90° × π/180° = π/2."},
+ {q:"If tan θ = 1 and θ is acute, θ is:",o:["30°","45°","60°","90°"],a:1,e:"tan 45° = 1."},
+ {q:"Variance is the square of:",o:["Mean","Median","Standard deviation","Range"],a:2,e:"Variance = (standard deviation)²."},
+ {q:"For a perfectly symmetric distribution, mean and median are:",o:["Always different","Equal","Always zero","Undefined"],a:1,e:"In a symmetric distribution, mean and median coincide."},
+ {q:"The first quartile Q1 represents approximately:",o:["10th percentile","25th percentile","50th percentile","75th percentile"],a:1,e:"Q1 is the 25th percentile."}
+];
+let quizIndex=0, quizScore=0, quizAnswered=false;
+function renderQuiz(){
+ const q=quizQuestions[quizIndex];
+ document.getElementById("quizBox").innerHTML=`
+ <div style="display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted)">
+   <span>${currentLang==='te'?'ప్రశ్న':'Question'} ${quizIndex+1} ${currentLang==='te'?'లో':'of'} ${quizQuestions.length}</span><b>Score: ${quizScore}</b>
+ </div>
+ <div class="quiz-q"><h3>${q.q}</h3>
+ ${q.o.map((x,i)=>`<button class="quiz-opt" id="qo${i}" onclick="answerQuiz(${i})">${String.fromCharCode(65+i)}. ${x}</button>`).join("")}
+ </div>
+ <div id="quizFeedback"></div>
+ <div class="quiz-actions">
+   ${quizAnswered?`<button class="quiz-btn" onclick="nextQuiz()">${quizIndex===quizQuestions.length-1?L("finish"):L("next")}</button>`:""}
+   <button class="quiz-btn secondary" onclick="restartQuiz()">${L("restart")}</button>
+ </div>`;
+}
+function answerQuiz(choice){
+ if(quizAnswered)return;
+ quizAnswered=true;
+ const q=quizQuestions[quizIndex];
+ document.querySelectorAll(".quiz-opt").forEach((b,i)=>{if(i===q.a)b.classList.add("correct");if(i===choice&&i!==q.a)b.classList.add("wrong");b.disabled=true});
+ if(choice===q.a)quizScore++;
+ document.getElementById("quizFeedback").innerHTML=`<div class="quiz-result">${choice===q.a?L("correct"):L("incorrect")} ${q.e}</div>`;
+ renderQuiz();
+ // Re-apply answer highlighting after render.
+ document.querySelectorAll(".quiz-opt").forEach((b,i)=>{if(i===q.a)b.classList.add("correct");if(i===choice&&i!==q.a)b.classList.add("wrong");b.disabled=true});
+ document.getElementById("quizFeedback").innerHTML=`<div class="quiz-result">${choice===q.a?L("correct"):L("incorrect")} ${q.e}</div>`;
+}
+function nextQuiz(){
+ if(quizIndex<quizQuestions.length-1){quizIndex++;quizAnswered=false;renderQuiz();}
+ else{
+   const pct=Math.round(quizScore/quizQuestions.length*100);
+   document.getElementById("quizBox").innerHTML=`<div class="quiz-result" style="text-align:center">
+   ${L("complete")}<br><span style="font-size:30px">${quizScore}/${quizQuestions.length}</span><br>${pct}%<br>
+   ${pct>=80?L("excellent"):L("practice")}
+   </div><div class="quiz-actions"><button class="quiz-btn" onclick="restartQuiz()">🔄 Continue Quiz</button><button class="quiz-btn secondary" onclick="restartQuiz()">${L("tryAgain")}</button></div>`;
+ }
+}
+function restartQuiz(){
+ quizIndex=0;quizScore=0;quizAnswered=false;
+ // Continuous mode: reshuffle the question bank so every new round is different.
+ quizQuestions.sort(()=>Math.random()-0.5);
+ renderQuiz();
+}
+
+
+let lensImageUrl = "";
+function previewLens(event){
+  const file=event.target.files?.[0];
+  if(!file)return;
+  if(!file.type.startsWith("image/")){
+    document.getElementById("lensStatus").textContent="Please choose an image file.";
+    return;
+  }
+  if(lensImageUrl)URL.revokeObjectURL(lensImageUrl);
+  lensImageUrl=URL.createObjectURL(file);
+  document.getElementById("lensPreview").innerHTML=`<img src="${lensImageUrl}" alt="Math problem preview">`;
+  document.getElementById("lensStatus").textContent="Image ready. Tap “Take Photo” to use the camera.";
+}
+function openCamera(){
+  const input=document.getElementById("lensInput");
+  if(input){ input.click(); }
+}
+function clearLens(){
+  if(lensImageUrl)URL.revokeObjectURL(lensImageUrl);
+  lensImageUrl="";
+  document.getElementById("lensInput").value="";
+  document.getElementById("lensPreview").innerHTML="<div>🧮</div><span>Your maths image will appear here</span>";
+  document.getElementById("lensStatus").textContent="";
+}
+
+updateSolver();
+render();
+renderQuiz();
+applyLanguage();
+</script>
+
+<section id="voiceAssistant" class="card" style="margin-top:20px">
+  <h2>🎙️ Voice Assistant</h2>
+  <p>Ask a maths question by voice, or listen to the answer.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button id="voiceBtn" onclick="toggleVoiceAssistant()">🎤 Start Voice</button>
+    <button onclick="speakMathAnswer()">🔊 Read Answer</button>
+    <button onclick="stopSpeaking()">⏹️ Stop</button>
+  </div>
+  <div id="voiceStatus" style="margin-top:12px">Tap Start Voice and speak.</div>
+  <div id="voiceTranscript" style="margin-top:8px;font-weight:600"></div>
+</section>
+<script>
+let voiceRecognition=null, voiceListening=false;
+function speakText(text){ if(!('speechSynthesis' in window)){alert('Voice output is not supported in this browser.');return;} window.speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); const lang=(document.documentElement.lang||'en').toLowerCase(); u.lang=lang.startsWith('te')?'te-IN':'en-IN'; window.speechSynthesis.speak(u); }
+function stopSpeaking(){ if('speechSynthesis' in window) window.speechSynthesis.cancel(); }
+function speakMathAnswer(){ const el=document.getElementById('voiceTranscript'); const answer=document.querySelector('.answer, #solution, .result, #solverResult'); const text=(answer&&answer.innerText)||el.innerText||'Please solve a maths problem first.'; speakText(text); }
+function toggleVoiceAssistant(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){document.getElementById('voiceStatus').textContent='Voice input is not supported in this browser. Try Chrome on Android.';return;}
+ if(voiceListening){voiceRecognition.stop();return;}
+ voiceRecognition=new SR(); voiceRecognition.interimResults=false; voiceRecognition.continuous=false;
+ const selected=(document.querySelector('[lang]')?.getAttribute('lang')||document.documentElement.lang||'en').toLowerCase(); voiceRecognition.lang=selected.startsWith('te')?'te-IN':'en-IN';
+ voiceRecognition.onstart=()=>{voiceListening=true;document.getElementById('voiceBtn').textContent='🛑 Stop Listening';document.getElementById('voiceStatus').textContent='Listening… speak now.';};
+ voiceRecognition.onresult=e=>{const t=e.results[0][0].transcript;document.getElementById('voiceTranscript').textContent='You said: '+t;document.getElementById('voiceStatus').textContent='Voice captured. You can use the text in the app.';};
+ voiceRecognition.onerror=e=>{document.getElementById('voiceStatus').textContent='Voice error: '+e.error;};
+ voiceRecognition.onend=()=>{voiceListening=false;document.getElementById('voiceBtn').textContent='🎤 Start Voice';};
+ voiceRecognition.start();
+}
+</script>
+
+<script>
+(function(){
+  const bar=document.querySelector('#proProgress span');
+  function update(){
+    if(!bar) return;
+    const max=document.documentElement.scrollHeight-innerHeight;
+    bar.style.width=(max>0?Math.min(100,Math.max(0,scrollY/max*100)):0)+'%';
+  }
+  addEventListener('scroll',update,{passive:true}); addEventListener('resize',update); update();
+})();
+</script>
+
+<footer style="text-align:center;padding:28px 16px;color:#667085;font-size:13px">Kipler Mathematics and Statistics • Kipler Mathematics and Statistics • Learn • Practice • Solve</footer>
+
+<script id="modern-features-js">
+(function(){
+  let expr='', fontScale=1, contrast=false;
+  const $=id=>document.getElementById(id);
+  function toast(s){const t=$('mfToast');if(!t)return;t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+  window.mfKey=function(k){expr+=k;$('mfDisplay').textContent=expr};
+  window.mfClear=function(){expr='';$('mfDisplay').textContent='0'};
+  window.mfEqual=function(){
+    try{
+      if(!expr)return;
+      const safe=expr.replace(/[^0-9+\-*/().% ]/g,'');
+      const result=Function('"use strict";return ('+safe+')')();
+      expr=String(result);$('mfDisplay').textContent=expr;mfSaveHistory(safe+' = '+result);toast('Calculated ✓');
+    }catch(e){$('mfDisplay').textContent='Error';expr='';toast('Check the expression')}
+  };
+  window.mfCopy=async function(){try{await navigator.clipboard.writeText($('mfDisplay').textContent);toast('Result copied ✓')}catch(e){toast('Copy unavailable')}};
+  function mfSaveHistory(x){let h=JSON.parse(localStorage.getItem('mfHistory')||'[]');h.unshift(x);h=h.slice(0,12);localStorage.setItem('mfHistory',JSON.stringify(h));renderHistory()}
+  function renderHistory(){let h=JSON.parse(localStorage.getItem('mfHistory')||'[]');$('mfHistory').innerHTML=h.length?h.map(x=>'<div class="mf-history-item">'+x.replace(/</g,'&lt;')+'</div>').join(''):'No activity yet.'}
+  window.mfClearHistory=function(){localStorage.removeItem('mfHistory');renderHistory();toast('History cleared')}
+  window.mfAddStudy=function(){let n=Number(localStorage.getItem('mfSessions')||0)+1;localStorage.setItem('mfSessions',n);$('mfStreak').textContent=n;toast('Study session saved ✓')}
+  window.mfShare=async function(){const data={title:'Kipler Mathematics and Statistics',text:'My Kipler Mathematics and Statistics',url:location.href};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(location.href);toast('App link copied ✓')}}catch(e){}}
+  window.mfInstall=function(){toast('Use your browser menu → Add to Home screen')}
+  window.mfFont=function(d){fontScale=Math.min(1.25,Math.max(.9,fontScale+d*.05));document.documentElement.style.fontSize=(fontScale*100)+'%';localStorage.setItem('mfFont',fontScale)}
+  window.mfContrast=function(){contrast=!contrast;document.documentElement.style.setProperty('--pro-border',contrast?'#111827':'#e4e7ec');document.documentElement.style.setProperty('--pro-muted',contrast?'#344054':'#667085');toast(contrast?'High contrast on':'High contrast off')}
+  fontScale=Number(localStorage.getItem('mfFont')||1);document.documentElement.style.fontSize=(fontScale*100)+'%';
+  $('mfStreak').textContent=localStorage.getItem('mfSessions')||0;renderHistory();
+  // Keyboard calculator support
+  document.addEventListener('keydown',e=>{if(/^[0-9+\-*/().]$/.test(e.key))mfKey(e.key);else if(e.key==='Enter')mfEqual();else if(e.key==='Escape')mfClear()});
+})();
+</script>
+
+
+<script id="kipler-v2-js">
+(function(){
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  window.kvTutor=function(){
+    const q=$('aiQ').value.trim().toLowerCase();
+    let a="Try entering a common question such as “2 + 3”, “12 × 5”, or “solve x² - 5x + 6 = 0”.";
+    const nums=q.match(/-?\d+(?:\.\d+)?/g);
+    if(nums && /[+]/.test(q) && nums.length>=2) a=`Addition: ${nums[0]} + ${nums[1]} = ${Number(nums[0])+Number(nums[1])}.`;
+    else if(nums && /(?:times|multiply|×|\*)/.test(q) && nums.length>=2) a=`Multiplication: ${nums[0]} × ${nums[1]} = ${Number(nums[0])*Number(nums[1])}.`;
+    else if(/x.*[²^].*5x.*6/.test(q)||/x.*5x.*6/.test(q)) a="Factor x² − 5x + 6 as (x − 2)(x − 3). Therefore x = 2 or x = 3.";
+    $('aiA').innerHTML=esc(a);
+  };
+  window.kvStats=function(){
+    const a=($('statsInput').value.match(/-?\d+(?:\.\d+)?/g)||[]).map(Number);
+    if(!a.length){$('statsA').textContent='Please enter numbers separated by commas.';return}
+    const s=[...a].sort((x,y)=>x-y), n=s.length, sum=a.reduce((x,y)=>x+y,0);
+    const mean=sum/n, median=n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2;
+    const counts={};a.forEach(x=>counts[x]=(counts[x]||0)+1);
+    const max=Math.max(...Object.values(counts)), modes=max>1?Object.keys(counts).filter(x=>counts[x]===max).join(', '):'No mode';
+    $('statsA').innerHTML=`<b>Mean:</b> ${mean}<br><b>Median:</b> ${median}<br><b>Mode:</b> ${esc(modes)}<br><b>Range:</b> ${s[n-1]-s[0]}<br><b>Count:</b> ${n}`;
+  };
+  const challenges=[
+    ["If 2x + 6 = 14, find x.","x = 4"],
+    ["Find the mean of 4, 6 and 8.","Mean = 6"],
+    ["What is 3² + 4²?","25"],
+    ["Find the next term: 2, 5, 8, 11, …","14"],
+    ["What is the median of 3, 7, 9, 12, 15?","9"]
+  ];
+  let current=0;
+  window.kvNewChallenge=function(){current=Math.floor(Math.random()*challenges.length);$('challengeQ').textContent=challenges[current][0];$('challengeA').textContent='';};
+  window.kvAnswer=function(){$('challengeA').textContent=challenges[current][1]};
+  window.kvSaveGoal=function(){const v=Math.max(5,Number($('studyGoal').value)||30);localStorage.setItem('kvGoal',v);$('goalA').textContent=`Daily goal saved: ${v} minutes.`};
+  window.kvSaveNote=function(){const v=$('noteInput').value.trim();if(!v)return;$('noteA').textContent=v;localStorage.setItem('kvNote',v);toast('Formula note saved ✓')};
+  function toast(s){const t=document.getElementById('mfToast');if(t){t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}}
+  function render(){
+    const n=Number(localStorage.getItem('mfSessions')||0);
+    if($('kvSessions'))$('kvSessions').textContent=n;
+    if($('goalA'))$('goalA').textContent=localStorage.getItem('kvGoal')?`Daily goal: ${localStorage.getItem('kvGoal')} minutes.`:'No daily goal set.';
+    if($('noteA'))$('noteA').textContent=localStorage.getItem('kvNote')||'No note saved yet.';
+    if($('badge2'))$('badge2').style.opacity=n>=5?'1':'.45';
+    if($('badge3'))$('badge3').style.opacity=n>=10?'1':'.45';
+    kvNewChallenge();
+  }
+  render();
+})();
+</script>
+
+
+<script>
+function showDifficultProblem(){
+  const topic=document.getElementById('difficultTopic').value;
+  const stats=document.getElementById('advancedStatsInputs');
+  if(topic==='statistics'){
+    stats.style.display='block';
+    stats.innerHTML=`<div class="solver-grid">
+      <label><b>Statistical Sum</b><select id="statType" onchange="handleStatisticsMethodChange()">
+        <option value="mean">Arithmetic Mean</option><option value="median">Median</option><option value="mode">Mode</option><option value="variance">Variance</option><option value="sd">Standard Deviation</option><option value="range">Range</option>
+      </select></label>
+      <label><b>Data / Values</b><input id="statData" placeholder="Simple data: 10, 20, 30, 40, 50" onkeydown="if(event.key==='Enter') solveDegreeProblem()"></label>
+    </div>
+    <div class="kv-card" style="margin-top:12px;padding:12px">
+      <b>📊 Frequency Table — X and F</b>
+      <p class="meaning" style="margin:5px 0">Enter values in <b>X</b> and their frequencies in <b>F</b>. Add as many rows as needed, and add more <b>X–F column pairs</b> when your question has multiple side-by-side sets. All completed pairs are included in the calculation.</p>
+      <div style="overflow-x:auto;max-width:100%;margin:8px 0"><table id="xfTable" style="width:max-content;min-width:100%;border-collapse:collapse;text-align:center"><thead id="xfHead"></thead><tbody id="xfRows"></tbody></table></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+        <button class="kv-btn" type="button" onclick="addXFRow()">＋ Add Row</button>
+        <button class="kv-btn" type="button" onclick="addXFPair()">＋ Add X–F Columns</button>
+        <button class="kv-btn primary" type="button" onclick="solveXFStatistics()">⚙️ Solve X–F</button>
+      </div>
+      <p class="meaning" style="margin:8px 0">On a phone, swipe the table sideways to reach added X–F pairs. Values already entered stay in place when you add columns or rows.</p><div id="xfResult" class="kv-result">Enter X and F values in one or more X–F pairs, then press Solve X–F.</div>
+    </div>
+    <div class="kv-card" style="margin-top:14px;padding:14px;border:2px solid #2864e6;border-radius:14px;background:linear-gradient(135deg,rgba(40,100,230,.08),rgba(14,165,233,.08))">
+      <span class="badge">📐 ADVANCED STATISTICS</span>
+      <h3 style="margin:8px 0">All Types of Deviations</h3>
+      <p class="meaning" style="margin:6px 0 10px">Solve these directly in the dedicated deviation solver: Range, Coefficient of Range, Quartile Deviation, Coefficient of Quartile Deviation, Mean Deviation about Mean/Median/Mode, Variance, Standard Deviation, and Coefficient of Variation.</p>
+      <button class="kv-btn primary" type="button" onclick="document.getElementById('allDeviationsSolver').scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('devX').focus({preventScroll:true})">📊 Open All Deviation Types Solver</button>
+    </div>`;
+    initXFRows();
+    document.getElementById('degreeInput').value='';
+    document.getElementById('degreeInput').placeholder='Not needed for statistics';
+    solveDegreeProblem();
+  }else{
+    stats.style.display='none'; stats.innerHTML='';
+    document.getElementById('degreeInput').placeholder='Enter degree, e.g. 45';
+    solveDegreeProblem();
+  }
+}
+function numData(){
+  const raw=(document.getElementById('statData')?.value||'').trim();
+  return raw ? raw.split(/[,;\s]+/).filter(Boolean).map(Number) : [];
+}
+let xfPairCount=1;
+function renderXFHead(){
+  const head=document.getElementById('xfHead'); if(!head)return;
+  let row='<tr>';
+  for(let p=0;p<xfPairCount;p++) row+=`<th colspan="2" style="padding:7px;border:1px solid var(--line);background:var(--soft)">Pair ${p+1}</th>`;
+  row+='</tr><tr>';
+  for(let p=0;p<xfPairCount;p++) row+='<th style="padding:7px;border:1px solid var(--line)">X</th><th style="padding:7px;border:1px solid var(--line)">F</th>';
+  row+='</tr>'; head.innerHTML=row;
+}
+function initXFRows(){
+  const tb=document.getElementById('xfRows'); if(!tb) return;
+  tb.innerHTML=''; xfPairCount=1; renderXFHead(); for(let i=0;i<5;i++) addXFRow();
+}
+function makeXFPairCells(){
+  let cells='';
+  for(let p=0;p<xfPairCount;p++) cells+=`<td style="padding:4px;border:1px solid var(--line)"><input class="kv-input xf-x" data-pair="${p}" type="number" step="any" placeholder="X${p+1}" aria-label="X value, pair ${p+1}" style="min-width:72px;width:100%;box-sizing:border-box"></td><td style="padding:4px;border:1px solid var(--line)"><input class="kv-input xf-f" data-pair="${p}" type="number" step="any" min="0" placeholder="F${p+1}" aria-label="Frequency, pair ${p+1}" style="min-width:72px;width:100%;box-sizing:border-box" onkeydown="if(event.key==='Enter') solveXFStatistics()"></td>`;
+  return cells;
+}
+function addXFRow(){
+  const tb=document.getElementById('xfRows'); if(!tb)return;
+  const tr=document.createElement('tr'); tr.innerHTML=makeXFPairCells(); tb.appendChild(tr);
+}
+function addXFPair(){
+  const tb=document.getElementById('xfRows'); if(!tb)return;
+  xfPairCount++;
+  renderXFHead();
+  [...tb.querySelectorAll('tr')].forEach(tr=>{
+    tr.insertAdjacentHTML('beforeend',`<td style="padding:4px;border:1px solid var(--line)"><input class="kv-input xf-x" data-pair="${xfPairCount-1}" type="number" step="any" placeholder="X${xfPairCount}" aria-label="X value, pair ${xfPairCount}" style="min-width:72px;width:100%;box-sizing:border-box"></td><td style="padding:4px;border:1px solid var(--line)"><input class="kv-input xf-f" data-pair="${xfPairCount-1}" type="number" step="any" min="0" placeholder="F${xfPairCount}" aria-label="Frequency, pair ${xfPairCount}" style="min-width:72px;width:100%;box-sizing:border-box" onkeydown="if(event.key==='Enter') solveXFStatistics()"></td>`);
+  });
+}
+function getXF(){
+  const rows=[];
+  let missingFrequency=false, invalidFrequency=false, invalidX=false;
+  [...document.querySelectorAll('#xfRows tr')].forEach(tr=>{
+    for(let p=0;p<xfPairCount;p++){
+      const xe=tr.querySelector(`.xf-x[data-pair="${p}"]`), fe=tr.querySelector(`.xf-f[data-pair="${p}"]`);
+      const xText=(xe?.value||'').trim(), fText=(fe?.value||'').trim();
+      xe?.classList.remove('input-error'); fe?.classList.remove('input-error');
+      if(!xText && !fText) continue;
+      const x=Number(xText);
+      if(!xText || !Number.isFinite(x)){ invalidX=true; xe?.classList.add('input-error'); continue; }
+      if(!fText){ missingFrequency=true; fe?.classList.add('input-error'); continue; }
+      const f=Number(fText);
+      if(!Number.isFinite(f) || f<0){ invalidFrequency=true; fe?.classList.add('input-error'); continue; }
+      rows.push({x,f,fx:x*f});
+    }
+  });
+  return {rows,missingFrequency,invalidFrequency,invalidX};
+}
+function solveXFStatistics(){
+ const data=getXF(), rows=data.rows, out=document.getElementById('xfResult'); if(!out)return;
+ if(data.missingFrequency){out.innerHTML='<b>⚠️ Frequency missing.</b> Please enter F for every X value. Empty frequency cells are not treated as 0.';return;}
+ if(data.invalidX){out.innerHTML='<b>⚠️ Missing or invalid X value.</b> Every frequency must have a valid X value in the same row.';return;}
+ if(data.invalidFrequency){out.innerHTML='<b>⚠️ Invalid frequency.</b> Frequency must be a number greater than or equal to 0.';return;}
+ if(!rows.length){out.innerHTML='<b>Enter X and F values, then press Solve X–F.</b>';return;}
+ const combined=new Map(); rows.forEach(r=>combined.set(r.x,(combined.get(r.x)||0)+r.f));
+ const merged=[...combined].map(([x,f])=>({x,f,fx:x*f}));
+ const N=merged.reduce((a,r)=>a+r.f,0);
+ if(N<=0){out.innerHTML='<b>⚠️ Total frequency ΣF must be greater than zero.</b>';return;}
+ const sorted=merged.filter(r=>r.f>0).sort((a,b)=>a.x-b.x), sfx=merged.reduce((a,r)=>a+r.fx,0), mean=sfx/N, sfx2=merged.reduce((a,r)=>a+r.f*r.x*r.x,0), variance=Math.max(0,sfx2/N-mean*mean), sd=Math.sqrt(variance);
+ const valueAtPosition=pos=>{let cumulative=0;for(const r of sorted){cumulative+=r.f;if(cumulative>=pos)return r.x;}return sorted[sorted.length-1].x;}; let medianX; if(Number.isInteger(N)&&N%2===0){medianX=(valueAtPosition(N/2)+valueAtPosition(N/2+1))/2;}else{medianX=valueAtPosition(Math.ceil(N/2));}
+ const maxF=Math.max(...sorted.map(r=>r.f)), modes=sorted.filter(r=>r.f===maxF).map(r=>r.x), range=sorted[sorted.length-1].x-sorted[0].x;
+ const method=document.getElementById('statType')?.value||'mean';
+ const methods={mean:['Arithmetic Mean','Mean = ΣfX / Σf','ΣfX ÷ Σf = '+sfx+' ÷ '+N,mean],median:['Median','Median = middle observation using cumulative frequency','First X where cumulative F reaches N/2 = '+medianX,medianX],mode:['Mode','Mode = X value(s) with the highest frequency','Highest F = '+maxF+'; corresponding X value(s) = '+modes.join(', '),modes.join(', ')],variance:['Variance','Variance = ΣfX² / Σf − (Mean)²','('+sfx2.toFixed(4)+' ÷ '+N+') − ('+mean.toFixed(4)+')²',variance],sd:['Standard Deviation','SD = √Variance','√'+variance.toFixed(4),sd],range:['Range','Range = Largest X − Smallest X',sorted[sorted.length-1].x+' − '+sorted[0].x,range]};
+ const selected=methods[method]||methods.mean;
+ const body=sorted.map((r,i)=>`<tr><td>${i+1}</td><td>${r.x}</td><td>${r.f}</td><td>${r.fx}</td><td>${(r.f*r.x*r.x).toFixed(4)}</td></tr>`).join('');
+ out.innerHTML=`<div class="formula"><b>📐 Formula Box — ${selected[0]}</b><br>${selected[1]}<br><b>Calculation:</b> ${selected[2]}</div><div style="overflow:auto;margin-top:10px"><table style="width:100%;border-collapse:collapse;text-align:center"><tr><th>Step</th><th>X</th><th>F</th><th>fX</th><th>fX²</th></tr>${body}</table></div><div style="margin-top:10px;line-height:1.8"><b>Step 1:</b> ΣF = ${N}<br><b>Step 2:</b> ΣfX = ${sfx}<br><b>Step 3:</b> Mean = ${mean.toFixed(4)}<br><b>Step 4:</b> ΣfX² = ${sfx2.toFixed(4)}<br><b>Step 5:</b> Variance = ${variance.toFixed(4)}<br><b>Step 6:</b> Standard Deviation = ${sd.toFixed(4)}<br><b>Median:</b> ${medianX}<br><b>Mode:</b> ${modes.join(', ')}<br><b>Range:</b> ${range}</div><div class="final-answer" style="margin-top:10px">Final Answer — ${selected[0]} = <b>${typeof selected[3]==='number'?selected[3].toFixed(4):selected[3]}</b></div>`;
+}
+function handleStatisticsMethodChange(){
+  const rows=[...document.querySelectorAll('#xfRows tr')];
+  const hasXF=rows.some(tr=>(tr.querySelector('.xf-x')?.value||'').trim() || (tr.querySelector('.xf-f')?.value||'').trim());
+  if(hasXF) solveXFStatistics(); else solveDegreeProblem();
+}
+function solveDegreeProblem(){
+  const topic=document.getElementById('difficultTopic').value;
+  const d=Number(document.getElementById('degreeInput').value);
+  const box=document.getElementById('difficultFormula');
+  if(topic==='statistics'){
+    const a=numData(), type=document.getElementById('statType')?.value||'mean';
+    if(a.length===0){box.innerHTML='<div class="formula"><b>📊 Statistics Formula Box</b><br>Enter numbers separated by commas, then press Enter.</div>';return;}
+    if(a.some(x=>!Number.isFinite(x))){box.innerHTML='<div class="formula"><b>⚠️ Invalid data</b><br>Enter numbers only, separated by commas or spaces.</div>';return;}
+    const sorted=[...a].sort((x,y)=>x-y), n=a.length, sum=a.reduce((x,y)=>x+y,0), mean=sum/n;
+    let formula='', rows='', answer='';
+    if(type==='mean'){
+      formula='Arithmetic Mean = Σx / N';
+      rows=`<tr><td>1</td><td>Count values</td><td>N = ${n}</td></tr><tr><td>2</td><td>Add all values</td><td>Σx = ${sum}</td></tr><tr><td>3</td><td>Substitute</td><td>${sum} ÷ ${n} = ${mean.toFixed(4)}</td></tr>`;
+      answer=`Mean = ${mean.toFixed(4)}`;
+    } else if(type==='median'){
+      const med=n%2?sorted[(n-1)/2]:(sorted[n/2-1]+sorted[n/2])/2;
+      formula='Median = middle value (odd N) or average of two middle values (even N)';
+      rows=`<tr><td>1</td><td>Arrange data</td><td>${sorted.join(', ')}</td></tr><tr><td>2</td><td>Find N</td><td>N = ${n}</td></tr><tr><td>3</td><td>Locate middle</td><td>${n%2?`Position ${(n+1)/2}`:`Positions ${n/2} and ${n/2+1}`}</td></tr><tr><td>4</td><td>Calculate</td><td>${med}</td></tr>`;
+      answer=`Median = ${med}`;
+    } else if(type==='mode'){
+      const freq={}; a.forEach(x=>freq[x]=(freq[x]||0)+1); const max=Math.max(...Object.values(freq)); const modes=Object.keys(freq).filter(k=>freq[k]===max);
+      formula='Mode = value with the highest frequency';
+      rows=`<tr><td>1</td><td>Count frequency</td><td>Highest frequency = ${max}</td></tr><tr><td>2</td><td>Select most frequent value(s)</td><td>${modes.join(', ')}</td></tr>`;
+      answer=`Mode = ${modes.join(', ')}`;
+    } else if(type==='range'){
+      const range=sorted[n-1]-sorted[0]; formula='Range = Maximum − Minimum';
+      rows=`<tr><td>1</td><td>Maximum</td><td>${sorted[n-1]}</td></tr><tr><td>2</td><td>Minimum</td><td>${sorted[0]}</td></tr><tr><td>3</td><td>${sorted[n-1]} − ${sorted[0]}</td><td>${range}</td></tr>`;
+      answer=`Range = ${range}`;
+    } else {
+      const ss=a.reduce((acc,x)=>acc+(x-mean)**2,0), variance=ss/n, sd=Math.sqrt(variance);
+      const isSd=type==='sd', value=isSd?sd:variance;
+      formula=isSd?'Standard Deviation = √[Σ(x − x̄)² / N]':'Variance = Σ(x − x̄)² / N';
+      rows=`<tr><td>1</td><td>Find mean x̄</td><td>${mean.toFixed(4)}</td></tr><tr><td>2</td><td>Find Σ(x − x̄)²</td><td>${ss.toFixed(4)}</td></tr><tr><td>3</td><td>Divide by N</td><td>${ss.toFixed(4)} ÷ ${n} = ${variance.toFixed(4)}</td></tr>${isSd?`<tr><td>4</td><td>√${variance.toFixed(4)}</td><td>${sd.toFixed(4)}</td></tr>`:''}`;
+      answer=`${isSd?'Standard Deviation':'Variance'} = ${value.toFixed(4)}`;
+    }
+    box.innerHTML=`<div class="formula"><b>📊 Statistics Formula Box</b><br>${formula}</div><table class="step-table"><tr><th>Step</th><th>Working</th><th>Result</th></tr>${rows}</table><div class="answer">Final Answer: ${answer}</div>`;
+    return;
+  }
+  if(topic==='probability'){
+    box.innerHTML='<div class="formula"><b>📘 Probability — Guided example</b><br>Formula: P(E) = favourable outcomes ÷ total equally likely outcomes.</div><p>Example: A fair die is rolled. Probability of an even number = 3/6 = 1/2 = 0.5 (50%).</p><div class="answer">Final Answer: P(even) = 1/2</div><p class="meaning">For a custom problem, use the Advanced Statistics Problem Solving section below.</p>'; return;
+  }
+  if(topic==='coordinate'){
+    box.innerHTML='<div class="formula"><b>📐 Coordinate Geometry — Guided example</b><br>Distance between A(x₁,y₁) and B(x₂,y₂): d = √[(x₂−x₁)²+(y₂−y₁)²].<br>Example: A(1,2), B(4,6): d = √[(4−1)²+(6−2)²] = √(9+16) = 5.</div><div class="answer">Final Answer: Distance = 5 units</div><p class="meaning">Use the main Problem Solver above for custom coordinates.</p>'; return;
+  }
+  if(topic==='trig'){
+    if(!Number.isFinite(d)){box.innerHTML='<div class="formula"><b>📐 Formula Box</b><br>Enter a degree value and press Enter.</div>';return;}
+    const r=d*Math.PI/180, sin=Math.sin(r),cos=Math.cos(r),tan=Math.tan(r);
+    box.innerHTML='<div class="formula"><b>📐 Formula Box</b><br>Radians = Degrees × π / 180<br>sin θ = opposite / hypotenuse<br>cos θ = adjacent / hypotenuse<br>tan θ = sin θ / cos θ</div>'+
+      '<table class="step-table"><tr><th>Step</th><th>Working</th><th>Result</th></tr><tr><td>1</td><td>Given angle</td><td>'+d+'°</td></tr><tr><td>2</td><td>'+d+' × π / 180</td><td>'+r.toFixed(4)+' rad</td></tr><tr><td>3</td><td>sin('+d+'°)</td><td>'+sin.toFixed(4)+'</td></tr><tr><td>4</td><td>cos('+d+'°)</td><td>'+cos.toFixed(4)+'</td></tr><tr><td>5</td><td>tan('+d+'°)</td><td>'+tan.toFixed(4)+'</td></tr></table><div class="answer">Final Answer: θ = '+d+'°, radians = '+r.toFixed(4)+'</div>';
+  } else if(topic==='calculus'){
+    box.innerHTML='<div class="formula"><b>∫ / d/dx — Calculus guided example</b><br>Power rule: d/dx(xⁿ) = n·xⁿ⁻¹.<br>Example: y = 3x³ + 2x² − 5x + 7<br>Differentiate each term: 9x² + 4x − 5 + 0.</div><div class="answer">Final Answer: dy/dx = 9x² + 4x − 5</div><p class="meaning">This is a worked example; use the main Problem Solver for supported custom inputs.</p>';
+  } else {
+    const names={quadratic:'Quadratic Equation','ap':'AP / GP'};
+    box.innerHTML='<div class="formula"><b>📘 '+names[topic]+' — Formula Box</b><br>Use the main Problem Solver above for the complete step-by-step solution.</div>';
+  }
+}
+showDifficultProblem();
+</script>
+
+<!-- Reliable in-app camera -->
+<div id="cameraModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;padding:18px;box-sizing:border-box;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:18px;padding:14px;max-width:620px;width:100%;max-height:95vh;overflow:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3 style="margin:0">📷 Math Camera</h3><button onclick="closeCamera()" style="font-size:20px">✕</button></div>
+    <video id="cameraVideo" autoplay playsinline muted style="width:100%;margin-top:12px;border-radius:14px;background:#111;aspect-ratio:4/3;object-fit:cover"></video>
+    <canvas id="cameraCanvas" style="display:none"></canvas>
+    <p id="cameraError" style="color:#b00020;font-weight:600;margin:10px 0"></p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+      <button class="solve-btn" onclick="captureCameraPhoto()">📸 Capture Question</button>
+      <button class="quiz-btn secondary" onclick="switchCamera()">🔄 Switch Camera</button>
+      <button class="quiz-btn secondary" onclick="useFileCameraFallback()">📁 Upload Instead</button>
+      <button class="quiz-btn secondary" onclick="closeCamera()">Close</button>
+    </div>
+  </div>
+</div>
+<script>
+let cameraStream=null, cameraFacing='environment';
+async function startCamera(){
+  const modal=document.getElementById('cameraModal'), video=document.getElementById('cameraVideo'), err=document.getElementById('cameraError');
+  modal.style.display='flex'; err.textContent='';
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ err.textContent='Camera is not available in this browser/app. Use Upload Instead.'; return; }
+  try{
+    stopCameraStream();
+    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:cameraFacing},width:{ideal:1280},height:{ideal:720}},audio:false});
+    video.srcObject=cameraStream;
+    await video.play();
+  }catch(e){
+    let msg='Camera could not open.';
+    if(e.name==='NotAllowedError'||e.name==='PermissionDeniedError') msg='Camera permission was denied. Allow Camera permission in your phone/app settings, then try again.';
+    else if(e.name==='NotFoundError') msg='No camera was found on this device.';
+    else if(e.name==='NotReadableError') msg='Camera is busy or being used by another app. Close other camera apps and try again.';
+    else if(e.name==='SecurityError') msg='Camera access requires a secure app/browser context.';
+    err.textContent=msg+' You can use Upload Instead.';
+  }
+}
+function captureCameraPhoto(){
+  const video=document.getElementById('cameraVideo'), canvas=document.getElementById('cameraCanvas');
+  if(!cameraStream || !video.videoWidth){ document.getElementById('cameraError').textContent='Camera is not ready yet. Please wait a moment and try again.'; return; }
+  canvas.width=video.videoWidth; canvas.height=video.videoHeight; canvas.getContext('2d').drawImage(video,0,0,canvas.width,canvas.height);
+  canvas.toBlob(blob=>{ if(!blob)return; const file=new File([blob],'math-question-camera.jpg',{type:'image/jpeg'}); const dt=new DataTransfer(); dt.items.add(file); const input=document.getElementById('lensInput'); input.files=dt.files; previewLens({target:{files:[file]}}); closeCamera(); },'image/jpeg',.92);
+}
+function switchCamera(){ cameraFacing=cameraFacing==='environment'?'user':'environment'; startCamera(); }
+function stopCameraStream(){ if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;} const v=document.getElementById('cameraVideo'); if(v)v.srcObject=null; }
+function closeCamera(){ stopCameraStream(); const m=document.getElementById('cameraModal'); if(m)m.style.display='none'; }
+function useFileCameraFallback(){ closeCamera(); const input=document.getElementById('lensInput'); if(input)input.click(); }
+window.addEventListener('pagehide',stopCameraStream);
+</script>
+<script>
+let kiplerInstallPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();kiplerInstallPrompt=e;const b=document.getElementById('installKiplerBtn');if(b){b.style.display='inline-flex';b.textContent='📲 Install Kipler';}});
+window.addEventListener('appinstalled',()=>{const b=document.getElementById('installKiplerBtn');if(b){b.textContent='✅ Kipler Installed';b.disabled=true;}});
+async function installKipler(){
+ if(kiplerInstallPrompt){kiplerInstallPrompt.prompt();await kiplerInstallPrompt.userChoice;kiplerInstallPrompt=null;return;}
+ const isiOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+ if(isiOS){alert('To install Kipler on iPhone/iPad: tap Share ⬆️, then choose “Add to Home Screen”.');}
+ else{showInstallMessage();}
+}
+function addInstallButton(){if(document.getElementById('installKiplerBtn'))return;const b=document.createElement('button');b.id='installKiplerBtn';b.className='btn primary';b.type='button';b.style.cssText='position:fixed;right:14px;bottom:14px;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.18);border-radius:999px;padding:12px 16px;display:inline-flex;align-items:center;gap:6px;';b.textContent='📱 Install on Mobile';b.onclick=installKipler;document.body.appendChild(b);}
+window.addEventListener('load',addInstallButton);
+</script>
+
+
+<script id="kiplerInstallHelper">
+function showInstallMessage(){
+  const old=document.getElementById('kiplerInstallMessage');
+  if(old) old.remove();
+  const box=document.createElement('div');
+  box.id='kiplerInstallMessage';
+  box.style.cssText='position:fixed;left:16px;right:16px;bottom:76px;z-index:99999;padding:14px 16px;border-radius:14px;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.2);font:15px sans-serif;color:#111';
+  box.innerHTML='<b>📱 Install Kipler</b><br>In Chrome, tap ⋮ → <b>Install app</b> or <b>Add to Home screen</b>.<button style="float:right;margin-top:8px" onclick="this.parentElement.remove()">OK</button>';
+  document.body.appendChild(box);
+}
+</script>
+
+
+
+<section id="allDeviationsSolver" class="card" style="margin-top:18px;border:2px solid #2864e6">
+ <span class="badge">📐 ADVANCED STATISTICS • DEVIATIONS</span>
+ <h2>All Types of Deviations — Step-by-Step Solver</h2>
+ <p>Calculate Range, Coefficient of Range, Quartile Deviation, Mean Deviation about Mean/Median/Mode, Variance, Standard Deviation and Coefficient of Variation. Add unlimited rows and X–F column pairs. For continuous series enter intervals such as 0-10, 10-20.</p>
+ <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+  <label><b>Series Type</b><select id="devType" class="kv-input" style="width:100%;padding:11px;margin-top:6px"><option value="individual">Individual series</option><option value="discrete">Discrete series (X, F)</option><option value="continuous">Continuous series (class intervals, F)</option></select></label>
+  <label><b>Deviation / Method</b><select id="devMethod" class="kv-input" style="width:100%;padding:11px;margin-top:6px"><option value="all">All measures of deviation</option><option value="range">Range & coefficient of range</option><option value="qd">Quartile deviation & coefficient</option><option value="mdmean">Mean deviation about mean</option><option value="mdmedian">Mean deviation about median</option><option value="mdmode">Mean deviation about mode</option><option value="variance">Variance</option><option value="sd">Standard deviation</option><option value="cv">Coefficient of variation</option></select></label>
+ </div>
+ <p class="meaning" style="margin-top:12px">Enter values into X and frequencies into F. The table supports multiple side-by-side X–F pairs. New columns and rows keep values already entered. For an individual series, leave every F cell blank.</p>
+ <div style="overflow-x:auto;max-width:100%;margin-top:8px"><table id="devXFTable" style="width:max-content;min-width:100%;border-collapse:collapse;text-align:center"><thead id="devXFHead"></thead><tbody id="devXFRows"></tbody></table></div>
+ <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="solve-btn" type="button" onclick="addDevXFRow()">＋ Add Row</button><button class="solve-btn" type="button" onclick="addDevXFPair()">＋ Add X–F Columns</button><button class="solve-btn" type="button" onclick="solveAllDeviations()">🧮 Solve Statistics Sum</button><button class="solve-btn" type="button" style="background:#667085" onclick="clearAllDeviations()">Clear</button></div>
+ <textarea id="devX" hidden></textarea><textarea id="devF" hidden></textarea>
+ <div id="devFormula" class="formula" style="display:none;margin-top:14px"></div><div id="devWork" style="margin-top:12px;line-height:1.8;overflow-wrap:anywhere"></div><div id="devResult" class="answer" style="margin-top:12px"></div>
+ <p class="meaning">For continuous grouped data, class midpoints are used. Quartiles and median are estimated using cumulative frequencies of the midpoint values.</p>
+</section>
+<script>
+(function(){
+ const el=id=>document.getElementById(id), fmt=n=>Number.isFinite(n)?(Math.round(n*10000)/10000).toString():'not defined';
+ let devPairCount=1;
+ function renderDevHead(){const h=el('devXFHead');if(!h)return;let top='<tr>';for(let p=0;p<devPairCount;p++)top+='<th colspan="2" style="padding:8px;border:1px solid var(--line);background:var(--soft)">Pair '+(p+1)+'</th>';top+='</tr><tr>';for(let p=0;p<devPairCount;p++)top+='<th style="padding:8px;border:1px solid var(--line)">X / Class</th><th style="padding:8px;border:1px solid var(--line)">F</th>';top+='</tr>';h.innerHTML=top;}
+ function addDevXFRow(){const body=el('devXFRows');if(!body)return;const tr=document.createElement('tr');let cells='';for(let p=0;p<devPairCount;p++)cells+=devPairCells(p);tr.innerHTML=cells;body.appendChild(tr);}
+ function devPairCells(p,x='',f=''){const safe=v=>String(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');return '<td style="padding:4px;border:1px solid var(--line)"><input class="dev-x-cell kv-input" data-pair="'+p+'" aria-label="X value or class interval" value="'+safe(x)+'" placeholder="X'+(p+1)+' / 0-10" style="width:100%;min-width:95px;box-sizing:border-box;padding:9px"></td><td style="padding:4px;border:1px solid var(--line)"><input class="dev-f-cell kv-input" data-pair="'+p+'" aria-label="Frequency" value="'+safe(f)+'" placeholder="F'+(p+1)+'" type="number" min="0" step="any" style="width:100%;min-width:70px;box-sizing:border-box;padding:9px"></td>';}
+ function addDevXFPair(){const body=el('devXFRows');if(!body)return;devPairCount++;renderDevHead();[...body.querySelectorAll('tr')].forEach(tr=>tr.insertAdjacentHTML('beforeend',devPairCells(devPairCount-1)));}
+ function initDevXF(){const body=el('devXFRows');if(!body)return;body.innerHTML='';devPairCount=1;renderDevHead();for(let i=0;i<5;i++)addDevXFRow();}
+ function syncDevXF(){const all=[];let anyF=false,anyBlankF=false;[...el('devXFRows').querySelectorAll('tr')].forEach(tr=>{for(let p=0;p<devPairCount;p++){const xe=tr.querySelector('.dev-x-cell[data-pair="'+p+'"]'),fe=tr.querySelector('.dev-f-cell[data-pair="'+p+'"]');const x=(xe?.value||'').trim(),f=(fe?.value||'').trim();xe?.classList.remove('input-error');fe?.classList.remove('input-error');if(!x&&!f)continue;if(!x&&f){fe.classList.add('input-error');throw Error('A frequency F was entered without an X value in the same pair.');}if(x&&!f)anyBlankF=true;if(f)anyF=true;all.push({x,f});}});if(!all.length)throw Error('Enter X values in the table first.');if(anyF&&anyBlankF)throw Error('Enter F for every X value, or leave all F cells blank for an individual series.');const type=el('devType').value;if(type!=='individual'&&!anyF)throw Error('For discrete or continuous series, enter F for every X value/class interval.');if(type==='individual'&&anyF===false){el('devX').value=all.map(o=>o.x).join(',');el('devF').value='';}else{el('devX').value=all.map(o=>o.x).join(',');el('devF').value=all.map(o=>o.f).join(',');}}
+ function getData(){const type=el('devType').value,raw=(el('devX').value||'').split(',').map(v=>v.trim()).filter(Boolean),fraw=(el('devF').value||'').split(',').map(v=>v.trim()).filter(Boolean);if(!raw.length)throw Error('Enter X values or class intervals first.');let x=raw.map(v=>{if(type==='continuous'){const m=v.match(/^\s*(-?\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(-?\d+(?:\.\d+)?)\s*$/i);if(!m)throw Error('For continuous series, use intervals like 0-10, 10-20, 20-30.');if(+m[2]<=+m[1])throw Error('Each class interval must have an upper limit greater than its lower limit.');return (+m[1]+ +m[2])/2;}const n=Number(v);if(!Number.isFinite(n))throw Error('Invalid X value: '+v);return n;});if(type!=='individual'&&!fraw.length)throw Error('For discrete or continuous series, enter an F frequency for every X value/class interval.');let f=fraw.length?fraw.map(Number):x.map(()=>1);if(f.length!==x.length)throw Error('X/class intervals and F must contain the same number of entries.');if(f.some(v=>!Number.isFinite(v)||v<0))throw Error('Frequencies must be non-negative numbers.');const combined=new Map();x.forEach((v,i)=>combined.set(v,(combined.get(v)||0)+f[i]));const rs=[...combined].map(([x,f])=>({x,f})).sort((a,b)=>a.x-b.x);if(rs.reduce((a,b)=>a+b.f,0)<=0)throw Error('Total frequency must be greater than zero.');return rs;}
+ function quantile(rs,N,p){const target=Math.max(1,Math.ceil(N*p));let c=0;for(const r of rs){c+=r.f;if(c>=target)return r.x;}return rs[rs.length-1].x;}
+ window.addDevXFRow=addDevXFRow;window.addDevXFPair=addDevXFPair;
+ window.solveAllDeviations=function(){const box=el('devFormula'),work=el('devWork'),res=el('devResult');try{syncDevXF();const rs=getData(),N=rs.reduce((a,r)=>a+r.f,0),sum=rs.reduce((a,r)=>a+r.x*r.f,0),mean=sum/N,min=rs.find(r=>r.f>0)?.x,max=[...rs].reverse().find(r=>r.f>0)?.x;if(min===undefined||max===undefined)throw Error('At least one value must have a positive frequency.');const range=max-min,q1=quantile(rs,N,.25),q2=quantile(rs,N,.5),q3=quantile(rs,N,.75),qd=(q3-q1)/2,modeF=Math.max(...rs.map(r=>r.f)),modes=rs.filter(r=>r.f===modeF).map(r=>r.x),mode=modes[0],variance=rs.reduce((a,r)=>a+r.f*(r.x-mean)**2,0)/N,sd=Math.sqrt(Math.max(0,variance)),mdMean=rs.reduce((a,r)=>a+r.f*Math.abs(r.x-mean),0)/N,mdMedian=rs.reduce((a,r)=>a+r.f*Math.abs(r.x-q2),0)/N,mdMode=rs.reduce((a,r)=>a+r.f*Math.abs(r.x-mode),0)/N,cv=mean!==0?sd/Math.abs(mean)*100:NaN,cr=(max+min)!==0?range/(max+min):NaN,cqd=(q3+q1)!==0?(q3-q1)/(q3+q1):NaN;
+ const all=[['Range',range,'Largest X − Smallest X'],['Coefficient of Range',cr,'(L − S)/(L + S)'],['Q₁',q1,'25% cumulative-frequency position'],['Median (Q₂)',q2,'50% cumulative-frequency position'],['Q₃',q3,'75% cumulative-frequency position'],['Quartile Deviation (Semi-interquartile range)',qd,'(Q₃ − Q₁)/2'],['Coefficient of Quartile Deviation',cqd,'(Q₃ − Q₁)/(Q₃ + Q₁)'],['Mean Deviation about Mean',mdMean,'Σf|X − x̄| / Σf'],['Mean Deviation about Median',mdMedian,'Σf|X − Median| / Σf'],['Mean Deviation about Mode',mdMode,'Σf|X − Mode| / Σf'],['Variance (population)',variance,'Σf(X − x̄)² / Σf'],['Standard Deviation',sd,'√Variance'],['Coefficient of Variation',cv,'(SD / |Mean|) × 100%']];const method=el('devMethod').value,map={range:['Range','Coefficient of Range'],qd:['Q₁','Median (Q₂)','Q₃','Quartile Deviation (Semi-interquartile range)','Coefficient of Quartile Deviation'],mdmean:['Mean Deviation about Mean'],mdmedian:['Mean Deviation about Median'],mdmode:['Mean Deviation about Mode'],variance:['Variance (population)'],sd:['Standard Deviation'],cv:['Coefficient of Variation']},chosen=method==='all'?all:all.filter(a=>(map[method]||[]).includes(a[0]));
+ box.style.display='block';box.innerHTML='<b>Formula / Derivation</b><br>Σf = '+fmt(N)+'; ΣfX = '+fmt(sum)+'; Mean x̄ = ΣfX/Σf = '+fmt(mean)+'<br>Variance = Σf(X − x̄)²/Σf; SD = √Variance<br>QD = (Q₃ − Q₁)/2; MD = Σf|X − A|/Σf';
+ const body=rs.map((r,i)=>'<tr><td style="padding:6px;border-bottom:1px solid var(--line)">'+(i+1)+'</td><td style="padding:6px;border-bottom:1px solid var(--line)">'+fmt(r.x)+'</td><td style="padding:6px;border-bottom:1px solid var(--line)">'+fmt(r.f)+'</td><td style="padding:6px;border-bottom:1px solid var(--line)">'+fmt(r.x*r.f)+'</td><td style="padding:6px;border-bottom:1px solid var(--line)">'+fmt(r.x*r.x*r.f)+'</td></tr>').join('');
+ work.innerHTML='<b>Step 1 — Frequency table</b><div style="overflow:auto"><table style="border-collapse:collapse;width:100%;text-align:center"><tr><th style="padding:7px">Step</th><th style="padding:7px">X / midpoint</th><th style="padding:7px">F</th><th style="padding:7px">fX</th><th style="padding:7px">fX²</th></tr>'+body+'</table></div><p><b>Step 2:</b> ΣF = '+fmt(N)+'; ΣfX = '+fmt(sum)+'; Mean = '+fmt(mean)+'.</p><p><b>Step 3:</b> Q₁ = '+fmt(q1)+', Median = '+fmt(q2)+', Q₃ = '+fmt(q3)+'.</p><p><b>Step 4:</b> Apply the selected deviation formula.</p><div style="overflow:auto"><table style="border-collapse:collapse;width:100%"><tr><th style="text-align:left;padding:7px;border-bottom:1px solid var(--line)">Measure</th><th style="text-align:left;padding:7px;border-bottom:1px solid var(--line)">Formula</th><th style="text-align:left;padding:7px;border-bottom:1px solid var(--line)">Answer</th></tr>'+chosen.map(a=>'<tr><td style="padding:7px;border-bottom:1px solid var(--line)">'+a[0]+'</td><td style="padding:7px;border-bottom:1px solid var(--line)">'+a[2]+'</td><td style="padding:7px;border-bottom:1px solid var(--line)"><b>'+fmt(a[1])+(a[0]==='Coefficient of Variation'&&Number.isFinite(a[1])?'%':'')+'</b></td></tr>').join('')+'</table></div>';
+ res.innerHTML='✅ '+(method==='all'?'All deviation measures calculated.':chosen.map(a=>a[0]+' = '+fmt(a[1])+(a[0]==='Coefficient of Variation'&&Number.isFinite(a[1])?'%':'')).join(' • '));
+ }catch(e){box.style.display='block';box.innerHTML='<b>Check your inputs</b><br>'+e.message;work.innerHTML='';res.innerHTML='⚠️ '+e.message;}};
+ window.clearAllDeviations=function(){el('devXFRows').innerHTML='';devPairCount=1;renderDevHead();for(let i=0;i<5;i++)addDevXFRow();el('devX').value='';el('devF').value='';el('devFormula').style.display='none';el('devWork').innerHTML='';el('devResult').innerHTML='';};
+ initDevXF();
+})();
+</script>
+<section id="advancedStatisticsMethods" class="card" style="margin-top:18px"><h2>🧮 Advanced Statistics Problem Solving</h2><p>Select a method to see its type, formula/derivation, steps and answer.</p><label><b>Statistical Method</b></label><select id="asmMethod" onchange="asmInputs()"><option value="mean">Mean</option><option value="median">Median</option><option value="mode">Mode</option><option value="quartile">Quartiles & Quartile Deviation</option><option value="variance">Variance & Standard Deviation</option><option value="cv">Coefficient of Variation</option><option value="range">Range</option><option value="md">Mean Deviation</option><option value="skew">Karl Pearson Skewness</option><option value="corr">Correlation</option><option value="reg">Regression</option><option value="prob">Probability</option></select><div id="asmInputs" style="margin-top:12px"></div><button type="button" onclick="asmSolve()">🧮 Solve Problem</button> <button type="button" onclick="asmClear()">Clear</button><div id="asmFormula" class="formula-box" style="display:none;margin-top:12px"></div><div id="asmSteps" style="margin-top:12px"></div><div id="asmAnswer" style="margin-top:12px;font-weight:700"></div></section><script>(function(){const $=id=>document.getElementById(id);function nums(id){const raw=($(id)?.value||'').trim();return raw?raw.split(/[,;\s]+/).filter(Boolean).map(Number):[]}function fmt(n){return Number.isFinite(n)?(Math.round(n*10000)/10000):'—'}function rows(){let raw=($('asmX')?.value||'').trim().split(/[\n,;\s]+/).filter(Boolean),type=$('asmType')?.value||'individual',x=raw.map(v=>{if(type==='continuous'){let m=v.match(/^(-?\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(-?\d+(?:\.\d+)?)$/i);if(!m)throw Error('For continuous series, enter intervals like 0-10, 10-20, 20-30.');return (+m[1]+ +m[2])/2}return Number(v)}),f=nums('asmF');if(!x.length||x.some(v=>!Number.isFinite(v)))throw Error('Enter valid X values or class intervals.');if(type==='continuous'&&raw.some(v=>{const m=v.match(/^(-?\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(-?\d+(?:\.\d+)?)$/i);return !m||+m[2]<=+m[1]}))throw Error('Use valid class intervals such as 0-10, with each upper limit greater than its lower limit.');if(f.length===0){if(type!=='individual')throw Error('For discrete or continuous series, enter an F frequency for every X value/class interval.');f=x.map(()=>1)}if(x.length!==f.length||f.some(v=>!Number.isFinite(v)||v<0))throw Error('Enter equal valid X and F values; frequencies must be non-negative.');return x.map((v,i)=>({x:v,f:f[i]})).sort((a,b)=>a.x-b.x)}function show(){let m=$('asmMethod').value;if(['corr','reg'].includes(m)){$('asmInputs').innerHTML='<label>X values</label><textarea id="asmX">10,20,30,40,50</textarea><label>Y values</label><textarea id="asmY">12,18,29,35,47</textarea>'}else if(m==='prob'){$('asmInputs').innerHTML='<label>Favourable outcomes</label><input id="asmFav" type="number"><label>Total outcomes</label><input id="asmTot" type="number">'}else{$('asmInputs').innerHTML='<label><b>Series Type</b></label><select id="asmType"><option value="individual">Individual</option><option value="discrete">Discrete (X, F)</option><option value="continuous">Continuous (Class Interval, F)</option></select><p class="meaning">Enter values in the two columns X and F. Leave all F cells blank only for an individual series.</p><div style="overflow:auto"><table style="width:100%;border-collapse:collapse;text-align:center"><thead><tr><th style="padding:7px">X / Class Interval</th><th style="padding:7px">F (Frequency)</th><th style="padding:7px">Action</th></tr></thead><tbody id="asmXFRows"></tbody></table></div><button type="button" onclick="addAsmXFRow()">＋ Add Row</button><textarea id="asmX" hidden></textarea><textarea id="asmF" hidden></textarea>';for(let i=0;i<5;i++)addAsmXFRow()}}window.addAsmXFRow=function(x='',f=''){const b=$('asmXFRows');if(!b)return;const tr=document.createElement('tr');const esc=v=>String(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');tr.innerHTML='<td style="padding:5px"><input class="asm-x-cell" value="'+esc(x)+'" placeholder="X / class" style="width:100%;min-width:90px;padding:8px"></td><td style="padding:5px"><input class="asm-f-cell" value="'+esc(f)+'" type="number" min="0" step="any" placeholder="F" style="width:100%;min-width:60px;padding:8px"></td><td><button type="button" onclick="this.parentNode.parentNode.remove()">✕</button></td>';b.appendChild(tr)};window.asmInputs=show;window.asmSolve=function(){let m=$('asmMethod').value,F=$('asmFormula'),S=$('asmSteps'),A=$('asmAnswer');try{if(m==='prob'){let a=+$('asmFav').value,b=+$('asmTot').value;if(!(b>0&&a>=0&&a<=b))throw Error('Enter valid outcomes.');F.style.display='block';F.innerHTML='<b>Formula:</b> P(E)=Favourable outcomes / Total outcomes';S.innerHTML='P(E) = '+a+' / '+b;A.innerHTML='✅ Probability = '+fmt(a/b);return}if(!['corr','reg'].includes(m)){const tableRows=[...($('asmXFRows')?.querySelectorAll('tr')||[])].map(r=>({x:r.querySelector('.asm-x-cell').value.trim(),f:r.querySelector('.asm-f-cell').value.trim()})).filter(r=>r.x);if(!tableRows.length)throw Error('Enter X and F values in the table.');if(tableRows.some(r=>!r.f)&&tableRows.some(r=>r.f))throw Error('Enter F for every X row, or leave all F cells blank for an individual series.');$('asmX').value=tableRows.map(r=>r.x).join(',');$('asmF').value=tableRows.every(r=>!r.f)?'':tableRows.map(r=>r.f).join(',')}let x=nums('asmX');if(m==='corr'||m==='reg'){let y=nums('asmY');if(x.length!==y.length||x.length<2||x.some(v=>!Number.isFinite(v))||y.some(v=>!Number.isFinite(v)))throw Error('Enter at least two valid, matching numeric X and Y values.');let n=x.length,mx=x.reduce((a,b)=>a+b,0)/n,my=y.reduce((a,b)=>a+b,0)/n,sxy=0,sxx=0,syy=0;for(let i=0;i<n;i++){let dx=x[i]-mx,dy=y[i]-my;sxy+=dx*dy;sxx+=dx*dx;syy+=dy*dy}if(m==='corr'&&(sxx===0||syy===0))throw Error('Correlation needs variation in both X and Y values.');if(m==='reg'&&sxx===0)throw Error('Regression needs at least two different X values.');let r=sxy/Math.sqrt(sxx*syy),bxy=sxx?sxy/sxx:NaN;F.style.display='block';F.innerHTML=m==='corr'?'<b>Formula:</b> r = Σdxdy / √(Σdx²Σdy²)':'<b>Formula:</b> Y−Ȳ = b(Y)(X−X̄)';S.innerHTML='X̄ = '+fmt(mx)+'<br>Ȳ = '+fmt(my)+'<br>Σdxdy = '+fmt(sxy);A.innerHTML=m==='corr'?'✅ r = '+fmt(r):'✅ Y−'+fmt(my)+' = '+fmt(bxy)+'(X−'+fmt(mx)+')';return}let rs=rows(),N=rs.reduce((a,r)=>a+r.f,0);if(!(N>0))throw Error('Total frequency must be greater than zero.');let sx=rs.reduce((a,r)=>a+r.f*r.x,0),mean=sx/N,sx2=rs.reduce((a,r)=>a+r.f*r.x*r.x,0),v=sx2/N-mean*mean,sd=Math.sqrt(Math.max(0,v));let ftxt='',ans='';if(m==='mean'){ftxt='Mean = ΣfX / Σf';ans='Mean = '+fmt(mean)}else if(m==='variance'){ftxt='Variance = ΣfX²/Σf − (Mean)²; SD = √Variance';ans='Variance = '+fmt(v)+' | SD = '+fmt(sd)}else if(m==='cv'){ftxt='CV = (SD/Mean) × 100';ans='CV = '+fmt(sd/Math.abs(mean)*100)+'%'}else if(m==='range'){ftxt='Range = Largest X − Smallest X';ans='Range = '+fmt(rs.at(-1).x-rs[0].x)}else if(m==='md'){let md=rs.reduce((a,r)=>a+r.f*Math.abs(r.x-mean),0)/N;ftxt='MD = Σf|X−Mean|/Σf';ans='Mean Deviation = '+fmt(md)}else if(m==='skew'){let mode=rs.reduce((a,r)=>r.f>a.f?r:a,rs[0]).x;ftxt='Sk = (Mean − Mode)/SD';ans='Skewness = '+fmt((mean-mode)/sd)}else if(m==='mode'){let q=rs.reduce((a,r)=>r.f>a.f?r:a,rs[0]);ftxt='Mode = value with highest frequency';ans='Mode = '+q.x}else if(m==='median'){const at=pos=>{let c=0;for(const r of rs){c+=r.f;if(c>=pos)return r.x}return rs[rs.length-1].x};const med=Number.isInteger(N)&&N%2===0?(at(N/2)+at(N/2+1))/2:at(Math.ceil(N/2));ftxt='Median = middle observation; for even N, average the two middle observations';ans='Median = '+fmt(med)}else{const at=pos=>{let c=0;for(const r of rs){c+=r.f;if(c>=Math.max(1,Math.ceil(pos)))return r.x}return rs[rs.length-1].x};const q1=at(N/4),q3=at(3*N/4),qd=(q3-q1)/2,cqd=(q3+q1)!==0?(q3-q1)/(q3+q1):NaN;ftxt='Q₁ = N/4 position; Q₃ = 3N/4 position; QD = (Q₃−Q₁)/2; coefficient = (Q₃−Q₁)/(Q₃+Q₁)';ans='Q₁ = '+fmt(q1)+' | Q₃ = '+fmt(q3)+' | Quartile Deviation = '+fmt(qd)+' | Coefficient = '+fmt(cqd)}F.style.display='block';F.innerHTML='<b>Formula / Derivation:</b> '+ftxt;S.innerHTML='Step 1: Σf = '+fmt(N)+'<br>Step 2: ΣfX = '+fmt(sx)+'<br>Step 3: Mean = '+fmt(mean)+'<br>Step 4: Apply selected method.';A.innerHTML='✅ '+ans}catch(e){F.style.display='block';F.innerHTML='⚠️ '+e.message;S.innerHTML='';A.innerHTML='⚠️ '+e.message}};window.asmClear=function(){show();$('asmFormula').style.display='none';$('asmSteps').innerHTML='';$('asmAnswer').innerHTML=''};show()})()</script></body>
+</html>
